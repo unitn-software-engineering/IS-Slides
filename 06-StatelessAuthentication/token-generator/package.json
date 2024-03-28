@@ -1,0 +1,7 @@
+{
+  "name": "token-generator",
+  "main": "index.js",
+  "dependencies": {
+    "jsonwebtoken": "^5.7.0"
+  }
+}
