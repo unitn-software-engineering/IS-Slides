@@ -10,7 +10,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Git - Versioning and Collaboration'
-footer: 'Software Engineering - Trento, 2024 - Marco Robol'
+footer: 'Software Engineering - 2024/2025, Trento - Marco Robol'
 ---
 <!-- _class: home -->
 
@@ -32,7 +32,8 @@ Software Engineering - Lab
 
 ### Tools and references
 
-- CLI (https://git-scm.com/downloads)
+- Git (https://git-scm.com/downloads)
+- Visual Studio Code (https://code.visualstudio.com/)
 - GitHub (https://github.com)
 - Git Tutorial (https://www.atlassian.com/git/tutorials)
 
@@ -81,6 +82,26 @@ important bits of a project
 ---
 
 # Git Basics
+Git [git-scm.com](https://www.git-scm.com) is an **open source** version control application
+
+---
+
+# Downloading and installing Git
+
+- Open Terminal and type:
+
+```console
+$ git version
+```
+
+- You should see something like this:
+```console
+$ git version
+git version 2.33.1
+```
+
+- If you don't already have Git installed, you can download it at 
+  https://www.git-scm.com/
 
 ---
 
@@ -106,145 +127,224 @@ git status​: sys responds with (don’t worry for now if you don’t understan
 
 ---
 
-Before you proceed, there are a couple of things you probably want to do: Tell Git who you are and set your default text editor.
+## Local Git configuration
 
-`git config --global user.name "<your name>"`
+Before you proceed, you probably need to tell Git who you are. 
 
-`git config --global user.email <your email>`
-
-`git config credential.username <your username>`
-
-`git config --global core.editor pico`
-
----
-
-### Check status
-
-`git status`
-
-![w:600](master.png)
-
----
-
-### Stage files (tracked and untracked)
-
-`git add .` - add tracked files to staging area
-
-`git reset HEAD` - remove files from staging area - more details on this later
-
-### Commit staged changes
-
-`git commit -m "first commit"`
-
-(-m: add message)  
-(-a: stage changed tracked files, but in case you have new files you need to do `git add .` to manually track them )    
-(In Vim press `Esc` and then type `:q` to quit; `:w` to save; `:x` to save and exit)
-
-### Include staged changes in last commit
-
-`git commit -amend`
-
----
-
+```shell
+$ git config --global user.name "First-name Surname"
+$ git config --global user.email "you@email.com"
 ```
-We will now add ​app.js​ to the repository staging area and then create
-a new commit with a message describing what work was done in the commit.
-Do:
-- Change directory to our ​gitlesson​ folder if you are not there already
-- git add app.js​: system does not say anything
-- git status​: app.js is now among the changes to be committed, as a new file
-- git commit -m "add port constant"​: system responds with (your output may
-differ slightly)
-    [master (root-commit) 7bba746] add port constant
-    1 file changed, 1 insertion(+)
-    create mode 100644 app.js
+
+Git allows you to set configuration options at three different levels.
+
+- `--system` system-wide configurations, they apply to all users on this computer.
+
+- `--global` user-level configurations, they only apply to your user account.
+
+- `--local` repository-level configurations, they only apply to the specific repository where they are set.
+
+To see all config settings `git config --list`.
+
+---
+
+### Our favorite Git command: ***git status***
+
+```shell
+$ git status
+On branch main
+Your branch is up-to-date with 'origin/main'.
+nothing to commit, working tree clean
 ```
-After executing this example, your repo will now app.js added to the history ​and will track future updates to the file.
+
+We can see that:
+
+- we are on **branch main**
+![w:200](master.png)
+
+- everything is **up-to-date** with origin/main
+
+- our **working tree** is clean
+
+---
+
+# Working Trees
+
+Git tracks files, and keeps track of your history in 3 trees:
+
+![w:800](two-stage-commit-a.png)
+
+When you work locally, you are modifying the **Working Tree**. Your files will either be:
+- **untracked**
+- **modified**
+- **staged**
+- **committed**.
+
+---
+
+Now it is time to **create a file** in your local folder then, with your favorite editor (VSCode), **add a line of text** and save your file.
+
+![w:500](two-stage-commit-b.png)
+
+---
+
+## The two stage commit: 1. Stage changes
+
+It is time to create your first snapshot of the repository. 
+First, `$ git add .` add your edits (tracked and untracked files) to the staging area.
+
+        Use `git reset HEAD` to remove files from staging area - more on this later
+
+![w:500](two-stage-commit-c.png)
+
+---
+
+### The two stage commit: 2. Commit
+
+
+
+`git commit -m "first commit"` This take a snapshot of the unit of work staged.
+`-m`: add message, otherwise Vim will show up asking for a message
+`-a`: automatically stage all tracked files, does not apply to new files
+`-amend`: include staged changes in last commit
+
+    In Vim press `Esc` and then type `:q` to quit; `:w` to save; `:x` to save and exit
+
+![w:500](two-stage-commit-d.png)
+
+---
+
+# Commit Message
+
+Good commit messages should:
+
+ - Be short. ~50 characters is ideal.
+ - Describe the change introduced by the commit.
+ - Tell the story of how your project has evolved.
+
+---
+
+# Activity:  Commit
+
+1. let's check the status of our working tree: 
+```shell
+$ git status
+```
+2. Move the file from the working tree to the staging area:
+```shell
+$ git add my-file.md
+```
+3. Let's see what happened: 
+```shell
+$ git status
+```
+4. Now let's take our first snapshot: 
+```shell
+$ git commit - m "<commit message>"
+```
 
 ---
 
 ### Check commits history
 
-`git log --oneline`
-
-![w:600](statusVsLog.png)
-
----
-
-Now, let’s make a change and commit again.
-
-```
-Add a line to app.js​, for example insert const http = require('http');
-- git status​: (always good to do git status, never hurts). see our changes
-are NOT staged for commit. If you commit now, nothing will be committed.
-- git add app.js
-- git status​: now change is to be committed
-- git commit -m "add http library"​: system adds to commit
-- git status
-- git log --oneline
-    8bca9ed (​HEAD -> master​) add http library
-    7bba746 add port constant
+```shell
+$ git log
+$ git log --oneline
+$ git log --oneline --graph
+$ git log --oneline --graph --decorate
+$ git log --oneline --graph --decorate --all
+$ git log --stat
+$ git log --patch
 ```
 
-​What is this HEAD and master thing?
-
----
-
-## *master* branch and *HEAD* pointer
-
-In git, a ​**branch**​ is a *pointer to a commit*, and it has a readable name. When you start a git repo, git creates a *default branch called ​master*. ​Git also has a **pointer called HEAD**, which *points to the current version of commit*. Initially HEAD points to master.
-
-When you commit, git not only creates a new commit but advances the branch pointer to point to the new commit. So, after a commit on the master branch, git advances the master pointer to the new commit, while HEAD keeps pointing to master.
-
-`HEAD~~` `HEAD~2` `HEAD^^` (2 commits ago)
-
-`main~~` `main~2` `main^^` (2 commits before main)
-
-`HEAD^2` `main^2` (This is 1 commit back on second parent... see branching chapter)
+![w:500](statusVsLog.png)
 
 ---
 
 ### Check differences
 
 `git diff <hash> index.js `
+`git diff main~` (1 commit before main)
+`git diff main~~` (2 commits before main)
+`git diff main~2` (2 commits before main)
 
-`git diff main^ index.js` `git diff main~ index.js` (1 commit before main)
+> `git diff main^` (1 commit before main)
+> `git diff main^^` (2 commits before main)
+> `git diff main^2` (This is 1 commit back on second parent... see branching chapter)
 
-`git diff HEAD^ index.js` `git diff HEAD~ index.js` (1 commit ago)
+---
 
-### Revert back your working directory to a previous commit
+# Activity:  let’s make a change and commit again.
 
-`git switch <branch name or hash>`
+- Add a line to the file then `$ git status​` (always good to do git status, never hurts). See our changes are NOT staged for commit. If you commit now, nothing will be committed.
+- `$ git add .` then `$ git status​` now change is to be committed
+- `$ git commit -m "your message"​`, then `$ git status`
+- `$ git log --oneline`
 
-`git switch main^` `git switch main~` (1 commit before main)
+```bash
+$ git log --oneline
+    8bca9ed (​HEAD -> main) your message
+    7bba746 first commit
+```
 
-`git switch HEAD^` `git switch HEAD~` (1 commit ago)
+​What is this **HEAD** and **master** thing?
+
+---
+
+## *master* branch and *HEAD* pointer
+
+```bash
+$ git log --oneline
+    8bca9ed (​HEAD -> main) second commit
+    7bba746 first commit
+```
+
+![w:200](master.png)
+
+In git, a **​branch​ is a pointer to a commit**, and it has a readable name. When you start a git repo, git creates a default branch called **main**. ​Git also has a pointer called **HEAD**, which **points to current commit**, initially, *main*.
+
+When you commit, git not only creates a new commit but advances the branch pointer to point to the new commit. So, after a commit on the master branch, git advances the master pointer to the new commit, while HEAD keeps pointing to master.
 
 ---
 
 ## Navigating the commit history
 
 You can use `​git switch` (or old-fashioned `​git checkout​`) to revert back your working directory to a previous commit.
-Internally, it simply **updates the HEAD** (a pointer to the current commit) to point to the specified *​branch​ or commit*:
 
+`git switch <branch name or hash>`
+`git switch main^` `git switch main~` (1 commit before main)
+`git switch HEAD^` `git switch HEAD~` (1 commit ago)
+
+Internally, it simply **moves the HEAD** (a pointer to the current commit) to point to the specified *​branch​ or commit*:
 - when HEAD points to a **branch**, Git doesn't complain, but
-- when you checkout a **commit**, it switches into a ***detached HEAD*** state.
-
-> https://hub.packtpub.com/git-2-23-released-with-two-new-commands-git-switch-and-git-restore-a-new-tutorial-and-much-more/
-> “Two new commands “**git switch**” and “**git restore**” are introduced to split “checking out a branch to work on advancing its history” and “checking out paths out of the index and/or a tree-ish to work on advancing the current history” out of the single “**git checkout**” command,”
+- when you **switch to a commit**, it goes into a ***detached HEAD*** state.
 
 ---
 
-#### Try
+# Activity: switch your working directory
 
-```
-● git log --oneline​: ​what is this HEAD and master thing? discuss
-● git checkout {previous commit ID}
-● more app.js​: see we reverted the file to the previous state
-● ls-la​: the entire folder is reverted (!)
-● git checkout master​: revert back to latests state, identified
-in this case by the label master
-```
+- `$ git log --oneline​`
+
+- `git switch <branch or hash>` or
+  `git switch main^` `git switch main~` (1 commit before main)
+  `git switch HEAD^` `git switch HEAD~` (1 commit ago)
+
+- see we reverted the working directory to the previous state
+
+- `$ git switch main` revert back to latest state
+
+What if you do `git restore HEAD~ index.MD`?
+
+---
+
+## Restore your files from the history
+
+```shell
+$ git restore
+````
+
+> https://hub.packtpub.com/git-2-23-released-with-two-new-commands-git-switch-and-git-restore-a-new-tutorial-and-much-more/
+> Two new commands **`git switch`** and **`git restore`** are introduced to split *"checking out a branch to work on advancing its history"* and *"checking out paths out of the index and/or a tree-ish to work on advancing the current history"* out of the single **`git checkout`** command.
 
 ---
 
@@ -262,7 +362,7 @@ Ignored files are usually build artifacts and machine generated files that can b
 
 ---
 
-# Ignoring a file that you've committed in the past
+## Ignoring a file that you've committed in the past
 
 If you want to ignore a file that you've committed in the past, you'll need to delete the file from your repository and then add a .gitignore rule for it. Using the --cached option with git rm means that the file will be deleted from your repository, but will remain in your working directory as an ignored file.
     
@@ -297,7 +397,7 @@ Modify files then create a new branch, stage and commit changes.
 
 Alternatively:
 
-`git checkout -b newFunction`
+`git switch -b newFunction`
 `git commit -am "commit in the new branch"`
 `git log`
 
@@ -385,13 +485,24 @@ https://www.atlassian.com/git/tutorials/syncing
 
 ---
 
-### Clone
+## Set up your GitHub.com account
+
+1. Access https://github.com/ and click Sign up
+2. Choose the free account, use the @unitn mail to get premium features 
+3. You will receive a verification email at the address provided
+4. Click the link to complete the verification process
+
+---
+
+### Clone with HTTPS
 
 1. On github.com create a github repository
 
-1. Clone repository in a local directory
+1. Clone repository with HTTPS in a local directory
 
-    `git clone [repoAddress] [folderName]`
+    `git clone [https://github.com/user/repo] [localDestFolder]`
+
+    > **NOTE**: many corporate networks restrict SSH traffic, so we highly recommend using HTTPS. Also, if you have two-factor authentication enabled and wish to use HTTPS, you will need to [set up a personal access token](https://docs.github.com/github/authenticating-to-github/accessing-github-using-two-factor-authentication#using-two-factor-authentication-with-the-command-line).
 
 1. Check differences with remote repository
     
@@ -576,93 +687,6 @@ Learn Git Branching - **learngitbranching.js**
 
 ---
 
-### Use the integrated UI
-
-`gitk`
-
-### Git cheat sheet
-
-> https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
-
-### Git rebase
-
-> https://git-scm.com/docs/git-rebase
-
-### Git patch
-
-> https://www.specbee.com/blogs/how-create-and-apply-patch-git-diff-and-git-apply-commands-your-drupal-website
-
-
-
-
-
-
-
-
-
----
-
-# Git Workflows
-
----
-
-
-### Centralized Workflow
-
-In this flow, the default development branch is called master and all changes are committed into this branch​. ​This workflow doesn’t require any other branches besides master​.
-
-![w:600](centralized.png)
-
----
-
-Tip:
-
-`git pull --rebase origin master`
-
-The pull would still work if you forgot this option, but you would wind up with a superfluous “merge commit” every time someone needed to synchronize with the central repository. For this workflow, it’s always better to rebase instead of generating a merge commit.
-
----
-
-### Git Feature Branch Workflow
-
-The core idea behind the Feature Branch Workflow is that all feature development should take place in a dedicated branch instead of the master branch.​ ​This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. It also means the master branch will never contain broken code, which is a huge advantage for continuous integration environments.
-
-![w:600](featureBranch.png)
-
----
-
-### Gitflow Workflow
-
-https://www.atlassian.com/git/tutorials/comparing-workflows
-
-The Gitflow Workflow defines a strict branching model designed around the project release. This provides a robust framework for managing larger projects.
-
-This workflow doesn’t add any new concepts or commands beyond what’s required for the ​Feature Branch Workflow​. Instead, it assigns very specific roles to different branches and defines how and when they should interact. In addition to feature branches, it uses individual branches for preparing, maintaining, and recording releases.
-
----
-
-![w:900](gitFlow.png)
-
----
-
-The ​master​ branch stores the official release history, and the ​develop​ branch serves as an integration branch for features. It's also convenient to tag all commits in the master branch with a version number.
-
-Features should never interact directly with master.
-
-Once develop has acquired enough features for a release (or a predetermined release date is approaching), you fork a release branch off of develop​. ​Creating this branch starts the next release cycle, so no new features can be added after this point—only bug fixes, documentation generation, and other release-oriented tasks should go in this branch​. ​Once it's ready to ship, the release branch gets merged into master and tagged with a version number. In addition, it should be merged back into develop, which may have progressed since the release was initiated.
-
-Maintenance or “hotfix” branches are used to quickly patch production releases.
-
----
-
-### Forking Workflow
-
-As in the other ​Git workflows​, the Forking Workflow begins with an official public repository stored on a server. But when a new developer wants to start working on the project, they do not directly clone the official repository. Instead, they ​fork​ the official repository to create a copy of it on the server.
-
-It's important to note that "forked" repositories and "forking" are not special git operations. Forked repositories are created using the standard ​git clone​ command. Forked repositories are generally "server-side clones" and usually managed and hosted by a 3rd party Git service.
-
----
-
 # Questions?
 
 marco.robol@unitn.it
@@ -671,11 +695,11 @@ marco.robol@unitn.it
 
 # Additional material
 
-Learn Git Branching - **learngitbranching.js**
-> https://learngitbranching.js.org/?locale=en_US
+> ### Cheat sheet https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
 
-An open source game about learning Git! **ohmygit.org**
-> https://ohmygit.org/
+> ### `gitk` Integrated UI 
+> ### `rebase` https://git-scm.com/docs/git-rebase
+> ### `patch` https://www.specbee.com/blogs/how-create-and-apply-patch-git-diff-and-git-apply-commands-your-drupal-website
 
-Git **cheat sheet**
-> https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
+> ### Learn Git Branching https://learngitbranching.js.org/?locale=en_US
+> ### An open source game about learning Git https://ohmygit.org/
