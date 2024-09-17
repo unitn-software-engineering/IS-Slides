@@ -5,7 +5,7 @@ paginate: true
 backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
-header: 'RESTful WebAPIs'
+header: 'OpenAPI'
 footer: 'Marco Robol - Trento, 2022 - Software Engineering'
 ---
 
@@ -32,30 +32,74 @@ Use the following tools to document and test your APIs:
 
 ---
 
-## EasyLib
-
-Web service for the management of book lendings to students.
+## EasyLib/oas3.yaml 1/3
 
 > Repository: https://github.com/unitn-software-engineering/EasyLib
-
 > APIs documentation: https://easylib.docs.apiary.io/#
+
+```yaml
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: "EasyLib OpenAPI 3.0"
+  description: API for managing book lendings.
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Localhost
+paths:
+  ...
+components:
+  ...
+```
 
 ---
 
-# Notes on Implementing RESTful WebAPIs
+## EasyLib/oas3.yaml 2/3
 
-The response of a POST request should provide an empty body and an HTTP header 'Location' with a link to the newly created resource. For example:
-```javascript
-app.post('/api/products', function (req, res) {
-  ...
-  res.status(201).location("/api/products/" + product.id);
-  ...
-}
+```yaml
+paths:
+  /booklendings:
+    post:
+      description: >-
+        Creates a new booklending.
+      summary: Borrow a book
+      responses:
+        '201':
+          description: 'Booklending created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created booklending.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booklending'
 ```
 
-Send the correct HTTP status codes: https://www.restapitutorial.com/lessons/httpmethods.html
+---
 
-> A complete list of HTTP status code: [restapitutorial.com/httpstatuscodes.html](https://www.restapitutorial.com/httpstatuscodes.html)
+## EasyLib/oas3.yaml 3/3
+
+```yaml
+components:
+  schemas:
+    Booklending:
+      type: object
+      required:
+      - student
+      - book
+      properties:
+        user:
+          type: string
+          description: 'Link to the user'
+        book:
+          type: integer
+          description: 'Link to the book'
+```
 
 ---
 

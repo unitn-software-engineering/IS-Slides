@@ -10,7 +10,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Git - Versioning and Collaboration'
-footer: 'Software Engineering - Trento, 2023 - Marco Robol'
+footer: 'Software Engineering - Trento, 2024 - Marco Robol'
 ---
 <!-- _class: home -->
 
@@ -19,8 +19,6 @@ footer: 'Software Engineering - Trento, 2023 - Marco Robol'
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
-
-*Academic year 2022/2023 - Second semester*
 
 ---
 
@@ -216,21 +214,24 @@ When you commit, git not only creates a new commit but advances the branch point
 
 ### Revert back your working directory to a previous commit
 
-`git checkout <branch name or hash>`
+`git switch <branch name or hash>`
 
-`git checkout main^` `git checkout main~` (1 commit before main)
+`git switch main^` `git switch main~` (1 commit before main)
 
-`git checkout HEAD^` `git checkout HEAD~` (1 commit ago)
+`git switch HEAD^` `git switch HEAD~` (1 commit ago)
 
 ---
 
 ## Navigating the commit history
 
-You can use `​git checkout​` to revert back your working directory to a previous commit.
+You can use `​git switch` (or old-fashioned `​git checkout​`) to revert back your working directory to a previous commit.
 Internally, it simply **updates the HEAD** (a pointer to the current commit) to point to the specified *​branch​ or commit*:
 
 - when HEAD points to a **branch**, Git doesn't complain, but
 - when you checkout a **commit**, it switches into a ***detached HEAD*** state.
+
+> https://hub.packtpub.com/git-2-23-released-with-two-new-commands-git-switch-and-git-restore-a-new-tutorial-and-much-more/
+> “Two new commands “**git switch**” and “**git restore**” are introduced to split “checking out a branch to work on advancing its history” and “checking out paths out of the index and/or a tree-ish to work on advancing the current history” out of the single “**git checkout**” command,”
 
 ---
 
@@ -292,7 +293,7 @@ You can omit the --cached option if you want to delete the file from both the re
 Modify files then create a new branch, stage and commit changes.
 
 `git branch newFunction`
-`git checkout newFunction`
+`git switch newFunction`
 
 Alternatively:
 
@@ -308,7 +309,7 @@ Alternatively:
 
 ## Fast-forward merge
 
-`git checkout master`
+`git switch master`
 
 `git merge newFunction`
 
@@ -330,14 +331,14 @@ A fast-forward merge is not possible if the branches have diverged.
 ## Conflicts in 3-way merge `git mergetool`
 
 ```javascript
-...
-<<<<<<< HEAD
-  "name": "branch-master",
-=======
-  "name": "new-feature",
->>>>>>> newFeature
-  "version": "1.0.0",
-...
+    ...
+    <<<<<<< HEAD
+    "name": "branch-master",
+    =======
+    "name": "new-feature",
+    >>>>>>> newFeature
+    "version": "1.0.0",
+    ...
 ```
 
 #### P4Merge visual tool `git config merge.tool p4merge`
@@ -354,10 +355,10 @@ https://www.perforce.com/products/helix-core-apps/merge-diff-tool-p4merge
 - modify readme on branch
 `git add .` `git commit -m "add readme"`
 `git log --graph --decorate --oneline ​(notice HEAD and master and branch)`
-- move on newport `git checkout newport`
+- move on newport `git switch newport`
 - modify app.js
 `git add .` `git commit -m "change port to 3001"`
-- move on master `git checkout master`
+- move on master `git switch master`
 - merge `git merge newport ​- editor will open for commit message. just save.`
 
 How can we create a merge conflict?
@@ -482,10 +483,10 @@ d, drop = remove commit
 
 ### Try it yourself
 
-- checkout master in an existing repo
+- switch to master in an existing repo
 - create a branch (say, somefeature)
 - make a change and commit (on master)
-- checkout somefeature
+- switch to somefeature
 - make a change on somefeature (conflicting with master) and commit
 - make another change on somefeature and commit
 - make a third change on somefeature and commit
@@ -516,7 +517,7 @@ To list stored tags in a repo: `git tag`
 - --mixed – The staged snapshot is updated to match the specified commit, but the working directory is not affected. This is the default option.
 - --hard – The staged snapshot and the working directory are both updated to match the specified commit.
 
-For example, the following command moves the hotfix branch backwards by two commits. `git checkout hotfix` `git reset HEAD~2`
+For example, the following command moves the hotfix branch backwards by two commits. `git switch hotfix` `git reset HEAD~2`
 
 ---
 

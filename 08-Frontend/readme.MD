@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Frontend'
-footer: 'Marco Robol - Trento, 2023 - Software Engineering'
+footer: 'Marco Robol - Trento, 2024 - Software Engineering'
 ---
 
 # **Frontend**
@@ -15,23 +15,20 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2022/2023 - Second semester*
+*Academic year 2023/2024 - Second semester*
 
 ---
 
-# Contents of today class
+# Contents
 
 - Basic frontend with HTML, fetch() API, DOM manipulation
 - Vue.js
 
-EasyLib Repositories:
-- Backend - https://github.com/unitn-software-engineering/EasyLib
-- Frontend - https://github.com/unitn-software-engineering/EasyLibVue
-
-Try:
-> Backend - https://easy-lib.onrender.com/api/v1
-> Basic Frontend - https://easy-lib.onrender.com
-> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp or https://unitn-software-engineering.github.io/EasyLibApp/
+> **EasyLib** https://github.com/unitn-software-engineering/EasyLib
+> *Frontend* - https://github.com/unitn-software-engineering/EasyLibVue
+> Demo APIs - https://easy-lib.onrender.com/api/v1
+> Demo Basic Frontend - https://easy-lib.onrender.com
+> Demo Vue Frontend - https://easy-lib.onrender.com/EasyLibApp or https://unitn-software-engineering.github.io/EasyLibApp/
 
 ---
 

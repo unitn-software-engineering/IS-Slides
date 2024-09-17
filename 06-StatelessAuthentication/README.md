@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Authentication'
-footer: 'Marco Robol - Trento, 2023 - Software Engineering'
+footer: 'Marco Robol - Trento, 2024 - Software Engineering'
 ---
 
 # **Authentication**
@@ -15,11 +15,11 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2022/2023 - Second semester*
+*Academic year 2023/2024 - Second semester*
 
 ---
 
-# Contents of today class
+# Contents
 
 - Token-based RESTful access control
 - Implementation in EasyLib
@@ -64,7 +64,6 @@ Send a `POST` request to `/api/authenticate` with `{name: 'admin', password: '12
 
 - Send the token in the **HEADER**: `x-access-token` or `Authorization: Bearer <token>`
 - You can also send the token as a **URL** parameter: `/api/users?token=YOUR_TOKEN`
-- Or you can send the token as a **POST** parameter `token`
 
 Test this with EasyLib on `GET /api/users`!
 
@@ -120,9 +119,9 @@ Locally, we need to set our `SUPER_SECRET` system variable before running our ap
 
 ---
 
-## www.npmjs.com/package/dotenv `$ npm install dotenv`
+## Dotenv - www.npmjs.com/package/dotenv
 
-**Dotenv** loads values from `.env` file and made them available within the application as environment variables `process.env.*`
+**Dotenv** (`$ npm install dotenv`) loads values from `.env` file and made them available within the application as environment variables in `process.env.*`
 
 ```javascript
 SUPER_SECRET="islab" // .env file to be ignored by git; see `.gitignore`
@@ -133,7 +132,7 @@ SUPER_SECRET="islab" // .env file to be ignored by git; see `.gitignore`
   require('dotenv').config()
   ```
 
-- **Preloading** `dotenv` when invoking Node.js with --require (-r) option. By doing this, you do not need to require and load dotenv in your application code. `$ node -r dotenv/config your_script.js` or `$ npm run dev` using a script defined in `package.json`:
+- **Preloading** `dotenv` when invoking Node.js with --require (-r) option. By doing this, you do not need to load dotenv in your application code. `$ node -r dotenv/config your_script.js` or `$ npm run dev` using a script defined in `package.json`:
   ```json
     "scripts": {
       "dev": "node -r dotenv/config index.js", ...

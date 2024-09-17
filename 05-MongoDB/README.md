@@ -15,7 +15,7 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2022/2023 - Second semester*
+*Academic year 2023/2024 - Second semester*
 
 ---
 
@@ -29,17 +29,21 @@ Software Engineering - Lab
 
 # MongoDB - mongodb.com
 
+A distributed, **document-oriented** database that stores data in JSON-like documents, where fields can vary from document to document.
+
+- **Database** - a physical container for collections. Each database gets its own set of files on the file system;
+
+- **Collection** - a group of documents that exists within a single database. Collections do not enforce a schema;
+
+- **Document** model maps to the **objects** in your application code; Typically, all documents in a collection are of similar or related purpose;
+
+- **Queries** and **aggregation** provide powerful ways to access and analyze your data.
+
 > https://www.mongodb.com/en-us/what-is-mongodb
 
-- MongoDB stores data in flexible, JSON-like documents, meaning fields can vary from document to document and data structure can be changed over time
+---
 
-- The document model maps to the objects in your application code, making data easy to work with
 
-- Ad hoc queries, indexing, and real time aggregation provide powerful ways to access and analyze your data
-
-- MongoDB is a distributed database at its core, so high availability, horizontal scaling, and geographic distribution are built in and easy to use
-
-- MongoDB is free to use.
 
 ---
 

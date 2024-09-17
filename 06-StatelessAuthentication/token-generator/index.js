@@ -1,4 +1,4 @@
-var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var SUPER_SECRET ='is2lab'
 

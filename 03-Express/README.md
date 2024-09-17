@@ -200,6 +200,23 @@ app.post('/api/products', function (req, res) {
 
 ---
 
+# Notes on Implementing RESTful WebAPIs
+
+The response of a POST request should provide an empty body and an HTTP header 'Location' with a link to the newly created resource. For example:
+```javascript
+app.post('/api/products', function (req, res) {
+  ...
+  res.status(201).location("/api/products/" + product.id);
+  ...
+}
+```
+
+Send the correct HTTP status codes: https://www.restapitutorial.com/lessons/httpmethods.html
+
+> A complete list of HTTP status code: [restapitutorial.com/httpstatuscodes.html](https://www.restapitutorial.com/httpstatuscodes.html)
+
+---
+
 ## Using Postman to test our web server
 
 > https://www.postman.com/

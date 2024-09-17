@@ -5,8 +5,8 @@ paginate: true
 backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
-header: 'MongoDB'
-footer: 'Marco Robol - Trento, 2023 - Software Engineering'
+header: 'Deploying'
+footer: 'Marco Robol - Trento, 2024 - Software Engineering'
 ---
 
 # **Deploying in the Cloud**
@@ -15,7 +15,7 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2022/2023 - Second semester*
+*Academic year 2023/2024 - Second semester*
 
 ---
 
