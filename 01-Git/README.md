@@ -186,22 +186,24 @@ Now it is time to **create a file** in your local folder then, with your favorit
 
 ![w:500](two-stage-commit-b.png)
 
+`git diff` What is in the working tree?
+
 ---
 
 ## The two stage commit: 1. Stage changes
 
-It is time to create your first snapshot of the repository. 
 First, `$ git add .` add your edits (tracked and untracked files) to the staging area.
 
         Use `git reset HEAD` to remove files from staging area - more on this later
 
-![w:500](two-stage-commit-c.png)
+![w:400](two-stage-commit-c.png)
+
+`git diff --staged` What is in the staging area?
+`git diff HEAD` What is in both working tree and staging area?
 
 ---
 
 ### The two stage commit: 2. Commit
-
-
 
 `git commit -m "first commit"` This take a snapshot of the unit of work staged.
 `-m`: add message, otherwise Vim will show up asking for a message
@@ -210,38 +212,24 @@ First, `$ git add .` add your edits (tracked and untracked files) to the staging
 
     In Vim press `Esc` and then type `:q` to quit; `:w` to save; `:x` to save and exit
 
-![w:500](two-stage-commit-d.png)
+![w:400](two-stage-commit-d.png)
 
 ---
 
-# Commit Message
+# When to make a commit
+
+Make a commit when you have:
+
+- a complete a unit of work.
+- changes you may want to undo.
+
+# Commit message
 
 Good commit messages should:
 
- - Be short. ~50 characters is ideal.
- - Describe the change introduced by the commit.
- - Tell the story of how your project has evolved.
-
----
-
-# Activity:  Commit
-
-1. let's check the status of our working tree: 
-```shell
-$ git status
-```
-2. Move the file from the working tree to the staging area:
-```shell
-$ git add my-file.md
-```
-3. Let's see what happened: 
-```shell
-$ git status
-```
-4. Now let's take our first snapshot: 
-```shell
-$ git commit - m "<commit message>"
-```
+- Be short. ~50 characters is ideal.
+- Tell the story of how your project has evolved.
+- Describe the change introduced by the commit.
 
 ---
 
@@ -263,7 +251,11 @@ $ git log --patch
 
 ### Check differences
 
-`git diff <hash> index.js `
+`git diff` What is in the working tree?
+`git diff --staged` What is in the staging area?
+`git diff HEAD` What is in both working tree and staging area?
+
+`git diff <hash> index.js ` (specify a file)
 `git diff main~` (1 commit before main)
 `git diff main~~` (2 commits before main)
 `git diff main~2` (2 commits before main)
@@ -274,20 +266,21 @@ $ git log --patch
 
 ---
 
-# Activity:  let’s make a change and commit again.
+# Activity: Commit
 
-- Add a line to the file then `$ git status​` (always good to do git status, never hurts). See our changes are NOT staged for commit. If you commit now, nothing will be committed.
-- `$ git add .` then `$ git status​` now change is to be committed
-- `$ git commit -m "your message"​`, then `$ git status`
-- `$ git log --oneline`
+1. Create a `README.md` file, then check the status of working tree `git status`. Changes are NOT staged for commit. If you commit now, nothing will be committed.
+1. Add the file to the staging area `git add README.md`,  then `git status​`.
+1. Take our first snapshot `git commit`, then `git status` and `git log`
+1. Add a line to the file, `git add .`, `git status​` see change ready to be committed
+1. `git commit -m "your message"​`, then `git status` and `git log`
 
-```bash
-$ git log --oneline
-    8bca9ed (​HEAD -> main) your message
-    7bba746 first commit
-```
+    ```bash
+    $ git log --oneline
+        8bca9ed (​HEAD -> main) your message
+        7bba746 first commit
+    ```
 
-​What is this **HEAD** and **master** thing?
+    ​What is this **HEAD** and **master** thing?
 
 ---
 
@@ -373,6 +366,8 @@ If you want to ignore a file that you've committed in the past, you'll need to d
 You can omit the --cached option if you want to delete the file from both the repository and your local file system.
 
 ---
+
+### Recap
 
 ![w:900](recap.jpg)
 
