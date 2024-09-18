@@ -26,7 +26,7 @@ Software Engineering - Lab
 
 - Git workflows:
   - Centralized Workflow
-  - Git Feature Branch Workflow
+  - Feature Branch Workflow
   - Gitflow Workflow
   - Forking Workflow
 - GitHub flow
