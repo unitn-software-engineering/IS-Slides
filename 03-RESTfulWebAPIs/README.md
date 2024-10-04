@@ -62,6 +62,18 @@ CRUD operations are mapped to the standard HTTP verbs. In our example we will ha
 
 ---
 
+- **GET** - **Read existing data** from a data source. The response can contain data such as a list of items, a single item, or even just a status message. A GET request is a **safe** and **idempotent** method, meaning that it can be repeated multiple times without having any side effects because it should only retrieve data, not modify it.
+
+- **POST** - **Create a new resource**. The data which is sent as part of a POST request is encoded in the body of the request and is not visible in the URL.
+
+- **PUT** - **Update an existing resource**. The request body should contain a *complete* representation of the resource, otherwise, the missing fields will be set to NULL, or the request just would fail. Look at PATCH for a partial update.
+
+- **DELETE** - **Delete an existing resource**. ID of the resource is specified in the URL.
+
+- **PATCH** - **Partially update an existing resource**. You specify only fields to be modifed.
+
+---
+
 ## Status codes
 
 Using status code in RESTful APIs: https://www.restapitutorial.com/lessons/httpmethods.html

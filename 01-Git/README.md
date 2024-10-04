@@ -543,6 +543,18 @@ Before and after a pull with a three-way merge:
 
 ---
 
+## Activity: Start collaborating on your project repository
+
+1. Create a repository on GitHub and add your team members;
+2. Create a README.md file;
+3. Each team member clone the repo locally and create a separate branch to work on a section of the readme, e.g. presentation of the team, problem, motivation, solution;
+4. Each create a commit with his own changes;
+5. `pull` changes of your team, `merge` with your work, `push` the merged version.
+
+
+
+---
+
 ## Hands-on
 
 Learn Git Branching - **learngitbranching.js** 
@@ -553,22 +565,19 @@ Learn Git Branching - **learngitbranching.js**
 
 ---
 
-# Advanced
+# Rewriting History and Undoing Commits
 
-    stash, rebase, tag, reset, revert ...
-
----
-
-### Stashing changes before applying `git stash` `git stash pop`
-![w:800](stash.png)
+    rebase reset revert
 
 ---
 
-# Rebasing
+## Rebasing
 
-`git rebase master` (commits in current branch are "re-applied" to the head of master)
+`git rebase master`commits in current branch are "re-applied" to the head of master.
 
-![w:800](rebase.png)
+![w:500](rebase.png)
+
+> https://git-scm.com/docs/git-rebase
 
 ---
 
@@ -589,45 +598,37 @@ d, drop = remove commit
 
 ### Try it yourself
 
-- switch to master in an existing repo
-- create a branch (say, somefeature)
-- make a change and commit (on master)
-- switch to somefeature
-- make a change on somefeature (conflicting with master) and commit
-- make another change on somefeature and commit
-- make a third change on somefeature and commit
-- then rebase, squashing the commit into one
-- `git log --graph --decorate --oneline`
+- switch to **main** in an existing repo
+- create a **branch** somefeature
+- make a change and **commit** (on main)
+- **switch** to somefeature
+- make a **change** on somefeature (conflicting with master) and commit
+- make **another** change on somefeature and commit
+- make a **third** change on somefeature and commit
+- then **rebase**, squashing the commit into one
+- `git log --graph --decorate --oneline --all`
 
 ---
 
-### Tagging
+## Reset - `git reset HEAD~2 <file>...`
 
-​Lightweight​ tag `git tag v1.0`
+Used to alter your history by moving your branch pointer.
 
-Annotated tag `git tag -a v1.4` store extra meta data such as: the tagger name, email, and date. A best practice is to consider Annotated tags as public, and Lightweight tags as private​. 
+- *--soft* – The staged snapshot and working directory are not altered in any way.
+- ***--mixed*** - [default option] - The staged snapshot is updated to match the specified commit, but the working directory is not affected.
+- *--hard* – The staged snapshot and the working directory are both updated to match the specified commit.
 
-The -m option and a message `git tag -a v1.0 -m "my version 1.0"` will immediately create a new tag and forgot opening the local text editor.
+```shell
+$ # The following moves the hotfix branch backwards by two commits:
+$ git switch hotfix
+$ git reset HEAD~2
+```
 
-To list stored tags in a repo: `git tag`
-
----
-
-# Undoing Commits & Changes
-
----
-
-### Reset - `git reset HEAD~2 <file>...`
-
-- --soft – The staged snapshot and working directory are not altered in any way.
-- --mixed – The staged snapshot is updated to match the specified commit, but the working directory is not affected. This is the default option.
-- --hard – The staged snapshot and the working directory are both updated to match the specified commit.
-
-For example, the following command moves the hotfix branch backwards by two commits. `git switch hotfix` `git reset HEAD~2`
+>https://git-scm.com/docs/git-reset
 
 ---
 
-### Revert - `git revert`
+## Revert - `git revert`
 
 The git revert command can be considered an 'undo' type command, however, it is not a traditional undo operation. Instead of removing the commit from the project history, **it figures out how to invert the changes introduced by the commit and appends a new commit with the resulting inverse content**. This prevents Git from losing history, which is important for the integrity of your revision history and for reliable collaboration.
 
@@ -639,7 +640,7 @@ The git revert command can be considered an 'undo' type command, however, it is 
 
 ---
 
-#### Try revert:
+### Try revert:
 
 ```
 git init .
@@ -662,6 +663,45 @@ git log --oneline
     3602d88 add new content to demo file
     299b15f initial commit
 ```
+
+---
+
+# Additional
+
+    stash tag
+
+---
+
+## Stashing changes before applying `git stash` `git stash pop`
+![w:700](stash.png)
+
+---
+
+## Tagging
+
+​Lightweight​ tag `git tag v1.0`
+
+- **`-a`** annotated tag with meta data, including name, email, and date
+
+> A best practice is to consider Annotated tags as public, and Lightweight tags as private​
+
+- **`-m`** can be used to directly specify a message.
+
+> `git tag -a v1.0 -m "my version 1.0"`
+
+To list all tags: `git tag`
+To publish the tag: `git push <remote_name> <tag_name>`
+
+---
+
+## Patching
+
+```shell
+$ git diff > my_patch_file.patch
+$ git apply my_patch_file.patch
+```
+
+> https://www.specbee.com/blogs/how-create-and-apply-patch-git-diff-and-git-apply-commands-your-drupal-website
 
 ---
 
@@ -692,9 +732,6 @@ marco.robol@unitn.it
 
 > ### Cheat sheet https://www.atlassian.com/git/tutorials/atlassian-git-cheatsheet
 
-> ### `gitk` Integrated UI 
-> ### `rebase` https://git-scm.com/docs/git-rebase
-> ### `patch` https://www.specbee.com/blogs/how-create-and-apply-patch-git-diff-and-git-apply-commands-your-drupal-website
-
+> ### `gitk` Integrated UI
 > ### Learn Git Branching https://learngitbranching.js.org/?locale=en_US
 > ### An open source game about learning Git https://ohmygit.org/

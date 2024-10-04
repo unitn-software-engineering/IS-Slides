@@ -108,17 +108,17 @@ In addition to being a place to host and share your Git projects, GitHub provide
 
 1. Create an **Issue** to discuss ideas, enhancements, tasks, and bugs
 
-2. Create a feature **Branch** to start experimenting with new features or to fix an issue
+2. Create a feature *branch* to start experimenting with new features or to fix an issue
 
 3. Open a **Pull request** to start a discussion about your changes
 
 3. **Review** of the pull request iss assigned to a team mate
 
-4. When the changes are approved, branch is **merged** and pull request is closed
+4. When the changes are approved, branch is *merged* and pull request is closed
 
 ---
 
-## Activity: Creating a GitHub Issue
+## Creating a GitHub Issue
 
 In GitHub, you will use issues to record and discuss ideas, enhancements, tasks, and bugs.
 
@@ -157,7 +157,7 @@ GitHub uses a syntax called **Markdown** to help you add basic text formatting t
 
 ---
 
-## Activity: Creating a GitHub pull request
+## Creating a GitHub pull request
 
 Earlier you created an **issue** about the file you would like to edit. Let's **create the branch** you will use to edit your file.
 
@@ -172,7 +172,7 @@ Earlier you created an **issue** about the file you would like to edit. Let's **
 
 ---
 
-## Activity: Code review
+## Code review
 
 One of the best ways to ensure code quality is to make peer reviews a part of every Pull Request. Let's review your partner's code now:
 
@@ -181,14 +181,14 @@ One of the best ways to ensure code quality is to make peer reviews a part of ev
 4. Hover over a single line in the file to see the blue +. Click the + to add a line comment.
 5. Comment on the line and click **Start a review**.
 6. In **Conversation** tab, add comments to the pull request.
-7. Back **Pull Request** tab, click **Review changes** in the top right corner.
+7. Back to **Files Changed** tab, click **Review changes** in the top right corner.
 8. Choose whether to **Approve** or **Request changes**.
 9. Enter a general comment for the review.
 10. Click **Submit review** then click the **Conversation** tab to check out completed review.
 
 ---
 
-## Activity: Merging pull requests
+## Merging pull requests
 
 Many project teams have established rules about who should merge a pull request:
 - Some say it should be the person who created the pull request since they will be the ones to deal with any issues resulting from the merge.
@@ -199,6 +199,24 @@ Many project teams have established rules about who should merge a pull request:
 1. Scroll to the bottom of the Pull Request and click the **Merge pull request** button
 1. Click **Confirm merge**, then click **Delete branch**
 1. In **Issues** tab, confirm your original issue has been closed
+
+---
+
+## Activity on the project
+
+You are a team of 3 people (**A**, **B**, **C**) working on a repository (1 owner, 2 collaborators)
+
+1. **A** creates a new Issue #1 with 2 tasks
+1. **B** edits a file in a new branch to start addressing Issue #1
+1. **B** creates a new Pull Request for the new branch mentioning Issue #1, where **C** is assigned as reviewer, while the Pull Request itself is assigned to **A**
+1. **C** makes his reviews and ask for changes
+1. **B** fix the code in a new commit in his branch
+1. **C** reviews the new code and approve
+1. **A** merge the pull request and check task 1 in Issue #1
+
+Note that **A** and **B** could be the same person, while reviewers could be more than 1.
+Rules can be setup to authorize only project manager to merge requests.
+The same applies also to external collaborators who create Pull Requests from their fork.
 
 ---
 
