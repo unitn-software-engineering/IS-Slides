@@ -6,16 +6,82 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'RESTful WebAPIs'
-footer: 'Marco Robol - Trento, 2024 - Software Engineering'
+footer: 'Marco Robol - Trento, 2024/2025 - Software Engineering'
 ---
 
-# **RESTful WebAPIs**
+# **Intro to Web 2.0 and RESTful WebAPIs**
 
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
+---
+
+# Contents
+
+- Web2.0 - Overview
+- RESTful WebAPIs - Concepts
+- Exploring APIs with Postman
+
+In the next labs... designing and documenting your APIs with OpenAPI specification language and implemention with Node.js [Express](https://expressjs.com/it/) web framework.
+
+---
+
+## From Static Website to Web Applications and *Web Services*
+
+- **Web 1.0** - Static content with HTML and hyperlinks. Interaction was only possible through HTML forms, where response pages were then generated on the server.
+
+- **Web 2.0** - Javascript-based **web applications** powered by asynchronous HTTP requests APIs and DOM manipulation supported by most browser.
+*Availability* - *Accessibility* - *Sharing* - *Compatibility*
+
+---
+
+## Asyncronous data retrieval and page modification 
+
+By decoupling the data interchange layer from the presentation layer Web applications:
+- **send and retrieve data from a server asynchronously** (in the background) without interfering with the display and behaviour of the existing page. 
+- **change content dynamically** without the need to reload the entire page.
+
+Initially presented as *AJAX* (Asynchronous JavaScript and XML), is the idea of using a set of web technologies on the client-side (including the built-in XMLHttpRequest) to create asynchronous web applications.
+
+**HTML and CSS** are used to mark up and style information. **JavaScript** is used to dynamically modify and display the new information.
+
+
+> https://en.wikipedia.org/wiki/Ajax_(programming)
+
+---
+
+![bg 50%](ajax-client-server.png)
+
+---
+
+# Modern Web Application Architecture
+
+![w:850px](web-application-architechture-diagram.png)
+
+> https://integrio.net/blog/modern-web-application-architecture
+
+---
+
+- Serverless Architecture
+
+> In this architecture, the backend is built using cloud-based solutions, such as AWS or Azure. Each function is responsible for tasks like registering users or sending email.
+> https://integrio.net/blog/modern-web-application-architecture
+
+
+![w:700px](serverless-architechture.png)
+
+---
+
+# Design choices for this lab
+
+- 1 RESTful **Web Service** implemented in Node.js. This will be deployed on the cloud on render.com or a similar **PaaS**.
+
+- 1 frontend developed in Vue.js as a **Single-Page Applications** (SPAs) e.g. Gmail, Trello, Spotify, and Twitter. Still, additional pages are allowed.
+
+    - No Server-Side Rendered Application (SSR) e.g. WordPress, Airbnb.
+
+    - Served as static content through CDN (Content Delivery Networks delivers content from the closest server). e.g. Cloudflare, Akamai, and Amazon CloudFront.
 
 ---
 
@@ -124,6 +190,20 @@ Web service for the management of book lendings to students.
 > Repository: https://github.com/unitn-software-engineering/EasyLib
 
 > APIs documentation: https://easylib.docs.apiary.io/#
+
+> Deploy https://easy-lib.onrender.com
+
+---
+
+# Designing your RESTful APIs
+
+Start from your user stories and provide RESTful APIs for each of them:
+
+- Identify resources and define their structure
+- Organize into main and sub-resources
+- Define supported methods and accepted parameters / constraints 
+- Define returned status codes
+
 
 ---
 

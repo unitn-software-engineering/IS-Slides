@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'OpenAPI'
-footer: 'Marco Robol - Trento, 2022 - Software Engineering'
+footer: 'Marco Robol - Trento, 2024/2025 - Software Engineering'
 ---
 
 # **Designing and Documenting RESTful APIs with OpenAPI Specification Language**
@@ -14,8 +14,6 @@ footer: 'Marco Robol - Trento, 2022 - Software Engineering'
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
-
-*Academic year 2023/2024 - Second semester*
 
 ---
 
@@ -100,6 +98,12 @@ components:
           type: integer
           description: 'Link to the book'
 ```
+
+---
+
+# Questions?
+
+marco.robol@unitn.it
 
 ---
 
@@ -192,9 +196,3 @@ const swaggerOptions = {
 const swaggerDocument = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 ```
-
----
-
-# Questions?
-
-marco.robol@unitn.it
