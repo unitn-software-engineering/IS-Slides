@@ -320,6 +320,17 @@ components:
 
 ---
 
+# Designing your RESTful APIs
+
+Start from your user stories and provide RESTful APIs for each of them:
+
+- Identify resources and define their structure
+- Organize into main and sub-resources
+- Define supported methods and accepted parameters / constraints 
+- Define returned status codes
+
+---
+
 # Questions?
 
 marco.robol@unitn.it
