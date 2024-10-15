@@ -98,7 +98,7 @@ servers:
     description: Optional server description, e.g. Internal staging server for testing
 ```
 
-All API paths are relative to the server URL. In the example above, `/users` means `http://api.example.com/v1/users` or `http://staging-api.example.com/users`, depending on the server used. For more information, see [API Server and Base Path](/docs/specification/api-host-and-base-path/).
+All API paths are relative to the server URL. In the example above, `/users` means `http://api.example.com/v1/users` or `http://staging-api.example.com/users`, depending on the server used. For more information, see [API Server and Base Path](https://swagger.io/docs/specification/api-host-and-base-path/).
 
 ---
 
@@ -119,7 +119,7 @@ paths:
     delete: ...
 ```
 
-All paths are relative to the [API server URL](/docs/specification/api-host-and-base-path/). The full request URL is constructed as `<server-url>/path`. Paths may have an optional short `summary` and a longer `description` for documentation purposes. `description` can be [multi-line](http://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines) and supports [Markdown](http://commonmark.org/help/) (CommonMark) for rich text representation.
+All paths are relative to the [API server URL](https://swagger.io/docs/specification/api-host-and-base-path/). The full request URL is constructed as `<server-url>/path`. Paths may have an optional short `summary` and a longer `description` for documentation purposes. `description` can be [multi-line](http://stackoverflow.com/questions/3790454/in-yaml-how-do-i-break-a-string-over-multiple-lines) and supports [Markdown](http://commonmark.org/help/) (CommonMark) for rich text representation.
 
 ---
 
@@ -148,13 +148,13 @@ paths:
 
 ### Operation Parameters
 
-OpenAPI 3.0 supports operation parameters passed via **path**, **query string**, **headers**, and **cookies**. You can also define the request body for operations that transmit data to the server, such as POST, PUT and PATCH. For details, see [Describing Parameters](/docs/specification/describing-parameters/) and [Describing Request Body](/docs/specification/describing-request-body/describing-request-body/).
+OpenAPI 3.0 supports operation parameters passed via **path**, **query string**, **headers**, and **cookies**. You can also define the request body for operations that transmit data to the server, such as POST, PUT and PATCH. For details, see [Describing Parameters](https://swagger.io/docs/specification/describing-parameters/) and [Describing Request Body](https://swagger.io/docs/specification/describing-request-body/describing-request-body/).
 
 ---
 
 ### Path Templating
 
-You can use curly braces `{}` to mark parts of an URL as [path parameters](/docs/specification/describing-parameters/#path-parameters):
+You can use curly braces `{}` to mark parts of an URL as [path parameters](https://swagger.io/docs/specification/describing-parameters/#path-parameters):
 
 ```yaml
 /users/{id}
@@ -168,7 +168,7 @@ The API client needs to provide appropriate parameter values when making an API 
 
 ### Query String in Paths
 
-Query string parameters **must not** be included in paths. They should be defined as [query parameters](/docs/specification/describing-parameters/#query-parameters) instead.
+Query string parameters **must not** be included in paths. They should be defined as [query parameters](https://swagger.io/docs/specification/describing-parameters/#query-parameters) instead.
 
 ```yaml
 # Incorrect
@@ -249,12 +249,12 @@ components:
 
 ---
 
-## EasyLib/oas3.yaml 1/3
+## Designing your RESTful APIs 1/4 - 10 minutes
 
-> Repository: https://github.com/unitn-software-engineering/EasyLib
-> APIs documentation: https://easylib.docs.apiary.io/#
+Setup a **Swagger project** and synch with branch *swagger* in folder `swagger/aos3.yaml`
 
 ```yaml
+# https://github.com/unitn-software-engineering/EasyLib/oas3.yaml
 openapi: 3.0.0
 info:
   version: '1.0'
@@ -265,17 +265,44 @@ info:
 servers:
   - url: http://localhost:8000/api/v1
     description: Localhost
-paths:
-  ...
+```
+
+> Check out EasyLib APIs documentation at https://easylib.docs.apiary.io/# or https://app.swaggerhub.com/apis/IS-unitn/EasyLib/1
+
+Now, starting from your user stories, design your RESTful APIs.
+
+---
+
+## Designing your RESTful APIs 2/4 - 15 minutes
+
+1. Identify at least **3 resources** and define the schemas
+
+```yaml
+# https://github.com/unitn-software-engineering/EasyLib/oas3.yaml
 components:
-  ...
+  schemas:
+    Booklending:
+      type: object
+      required:
+      - student
+      - book
+      properties:
+        user:
+          type: string
+          description: 'Link to the user'
+        book:
+          type: integer
+          description: 'Link to the book'
 ```
 
 ---
 
-## EasyLib/oas3.yaml 2/3
+## Designing your RESTful APIs 3/4 - 15 minutes
+
+2. Define your **root paths** to your resources and the supported methods
 
 ```yaml
+# https://github.com/unitn-software-engineering/EasyLib/oas3.yaml
 paths:
   /booklendings:
     post:
@@ -299,130 +326,45 @@ paths:
 
 ---
 
-## EasyLib/oas3.yaml 3/3
+## Designing your RESTful APIs 4/4 - 15 minutes
+
+3. Refine your APIs considering at least **1 sub resource** and at least **1 query parameter**
 
 ```yaml
-components:
-  schemas:
-    Booklending:
-      type: object
-      required:
-      - student
-      - book
-      properties:
-        user:
-          type: string
-          description: 'Link to the user'
-        book:
-          type: integer
-          description: 'Link to the book'
+paths:
+  /users:
+    get:
+      description: It is possible to show users by their role /users?role={role}
+      parameters:
+        - in: query
+          name: role
+          schema:
+            type: string
+            enum: [user, poweruser, admin]
+          required: true
+  /users/{userId}/books: ...
+  /users/{userId}/books/{bookId}: ...
 ```
 
 ---
 
-# Designing your RESTful APIs
+# APIs Versioning
 
-Start from your user stories and provide RESTful APIs for each of them:
+While you keep refining your APIs when considering more user stories, try not to modify previous APIs so to not break other parts of your application.
+If at some point you will need to introduce some breaking changes, consider releasing a new version of your APIs. However, ensuring back-compatibility with older APIs is not simple, so at some point you may decide to drop the support to your old APIs.
 
-- Identify resources and define their structure
-- Organize into main and sub-resources
-- Define supported methods and accepted parameters / constraints 
-- Define returned status codes
+```yml
+servers:
+  - url: http://api.example.com/v1
+```
+
+```yml
+servers:
+  - url: http://api.example.com/v2
+```
 
 ---
 
 # Questions?
 
 marco.robol@unitn.it
-
----
-
-# [Swagger UI Express](https://www.npmjs.com/package/swagger-ui-express)
-
-![w:1000](./swagger-ui-express.png)
-
----
-
-This module allows you to serve auto-generated swagger-ui generated API docs from express, based on a swagger.json file. The result is living documentation for your API hosted from your API server via a route.
-
-```javascript
-const express = require('express');
-const app = express();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-```
-
----
-
-# [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc)
-
-![w:1000](./swagger-jsdoc.png)
-
----
-
-This library reads your JSDoc-annotated source code and generates an OpenAPI (Swagger) specification. Imagine having API files like these:
-
-```javascript
-/**
- * @openapi
- * /:
- *   get:
- *     description: Welcome to swagger-jsdoc!
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
- */
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-```
-
----
-
-The library will take the contents of @openapi (or @swagger) with the following configuration:
-
-```javascript
-const swaggerJsdoc = require('swagger-jsdoc');
-
-const options = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Hello World',
-      version: '1.0.0',
-    },
-  },
-  apis: ['./src/routes*.js'], // files containing annotations as above
-};
-
-const openapiSpecification = swaggerJsdoc(options);
-```
-
-The resulting openapiSpecification will be a swagger validated specification.
-
----
-
-# swagger-ui-express and swagger-jsdoc
-
-Swagger specification auto-generated and served from express.
-
-```javascript
-const swaggerUI = require('swagger-jsdoc')
-const swaggerJsDoc = require('swagger-ui-express')
-
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'Hello World',
-      version: '1.0.0',
-    },
-  },
-  apis: ['./src/routes*.js'], // files containing annotations as above
-};
-
-const swaggerDocument = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-```
