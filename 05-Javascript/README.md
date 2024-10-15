@@ -31,12 +31,12 @@ In the next lab... how to implement a web service with Node.js [Express](https:/
 
 ---
 
-# Web 1.0 vs web 2.0
+## From Static Website to Web Applications and *Web Services*
 
-Web Applications vs. Desktop applications
-- ***Availability and accessibility*** - An internet connection and a browser. 
-- ***Sharing*** - Many users, shared data.
-- ***Standard tecnologies*** - Easy development.
+- **Web 1.0** - Static content with HTML and hyperlinks. Interaction was only possible through HTML forms, where response pages were then generated on the server.
+
+- **Web 2.0** - Javascript-based **web applications** powered by asynchronous HTTP requests APIs and DOM manipulation supported by most browser.
+*Availability* - *Accessibility* - *Sharing* - *Compatibility*
 
 ---
 

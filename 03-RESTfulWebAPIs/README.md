@@ -204,7 +204,6 @@ Start from your user stories and provide RESTful APIs for each of them:
 - Define supported methods and accepted parameters / constraints 
 - Define returned status codes
 
-
 ---
 
 # Questions?

@@ -27,6 +27,42 @@ Software Engineering - Lab
 
 ---
 
+# Modern Web Application Architecture
+
+![w:850px](web-application-architechture-diagram.png)
+
+> https://integrio.net/blog/modern-web-application-architecture
+
+---
+
+- Serverless Architecture
+
+> In this architecture, the backend is built using cloud-based solutions, such as AWS or Azure. Each function is responsible for tasks like registering users or sending email notifications. It is highly scalable but difficult to manage and debug.
+> https://integrio.net/blog/modern-web-application-architecture
+
+
+![w:500px](serverless-architechture.png)
+
+---
+
+# Design choices for this lab
+
+- One RESTful **Web Service** implemented in Node.js. This will be deployed on the cloud on render.com or a similar **PaaS**.
+
+- One frontend developed in Vue.js as a **Single-Page Applications** (SPAs) e.g. Gmail, Trello, Spotify, and Twitter. Still, additional pages are allowed.
+
+    - No Server-Side Rendered Application (SSR) e.g. WordPress, Airbnb.
+
+    - Served as static content through CDN (Content Delivery Networks delivers content from the closest server). e.g. Cloudflare, Akamai, and Amazon CloudFront.
+
+---
+
+Nowadays we have a mix of statically-rendered web pages, web applications and services: **Software as a Service**, ***Platform as a Service***, ***Infrastructure as a Service***.
+
+![w:800px](iaas-paas-saas-diagram.png)
+
+---
+
 ## Render: Cloud Application Hosting for Developers
 
 > Render is a unified cloud to build and run all your apps and websites with free TLS certificates, global CDN, private networks and auto deploys from Git. https://render.com/

@@ -303,3 +303,94 @@ Web service for the management of book lendings to students.
 
 marco.robol@unitn.it
 
+---
+
+# [Swagger UI Express](https://www.npmjs.com/package/swagger-ui-express)
+
+![w:1000](./swagger-ui-express.png)
+
+---
+
+This module allows you to serve auto-generated swagger-ui generated API docs from express, based on a swagger.json file. The result is living documentation for your API hosted from your API server via a route.
+
+```javascript
+const express = require('express');
+const app = express();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+```
+
+---
+
+# [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc)
+
+![w:1000](./swagger-jsdoc.png)
+
+---
+
+This library reads your JSDoc-annotated source code and generates an OpenAPI (Swagger) specification. Imagine having API files like these:
+
+```javascript
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+```
+
+---
+
+The library will take the contents of @openapi (or @swagger) with the following configuration:
+
+```javascript
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/routes*.js'], // files containing annotations as above
+};
+
+const openapiSpecification = swaggerJsdoc(options);
+```
+
+The resulting openapiSpecification will be a swagger validated specification.
+
+---
+
+# swagger-ui-express and swagger-jsdoc
+
+Swagger specification auto-generated and served from express.
+
+```javascript
+const swaggerUI = require('swagger-jsdoc')
+const swaggerJsDoc = require('swagger-ui-express')
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./src/routes*.js'], // files containing annotations as above
+};
+
+const swaggerDocument = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+```
