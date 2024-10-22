@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: '01 - Introduction to Web2.0, Javascript and Node.js'
-footer: 'Marco Robol - Trento, 2023 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **Introduction to Web2.0, Javascript and Node.js**
@@ -15,7 +15,7 @@ Software Engineering
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
+*Academic year 2024/2025*
 
 ---
 
@@ -64,6 +64,62 @@ Initially presented as *AJAX* (Asynchronous JavaScript and XML), is the idea of 
 ![w:900px](web-today.png)
 
 ![bg 100% opacity:.1](frameworks.png)
+
+---
+
+## Where are we headed? ... a web service backend
+
+```javascript
+// https://github.com/unitn-software-engineering/EasyLib/blob/master/app/books.js
+router.get('', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.find
+    let books = await Book.find({});
+    books = books.map( (book) => {
+        return {
+            self: '/api/v1/books/' + book.id,
+            title: book.title
+        };
+    });
+    res.status(200).json(books);
+});
+```
+
+---
+
+## Where are we headed? a frontend application
+
+```javascript
+// https://github.com/unitn-software-engineering/EasyLibVue/blob/master/src/components/BooksTable.vue
+function takeBook(book) {
+  if (!loggedUser.token) {
+    warningMessage.value = 'Please login to take a book!'
+    return;
+  }
+  warningMessage.value = '';
+  fetch(LENDINGS_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': loggedUser.token
+        },
+        body: JSON.stringify( { student: loggedUser.self, book: book.self } ),
+    })
+    .then((resp) => { return; })
+    .catch( error => console.error(error) ); // If there is any error you will catch them here
+};
+<template>
+  <h1>Books:</h1>
+  <ul>
+    <li v-for="book in books.value" :key="book.self">
+      <a :href="HOST+book.self">{{book.title}}</a>
+      -
+      <button @click="takeBook(book)">TAKE</button>
+      -
+      <button @click="deleteBookButton(book)">DELETE</button>
+    </li>
+  </ul>
+</template>
+```
 
 ---
 
@@ -277,6 +333,31 @@ function myFn () {
 
 console.log(variable)                 // ReferenceError
 ```
+
+---
+
+### Hoisting
+
+Declarations are **moved to the top**. A variable can be declared after been used.
+
+```javascript
+var x = 1;
+function fn() {
+    x = 2; // Assign 2 to x
+    console.log(x) // 2
+    var x; // Declare x
+}
+function fn2() {
+    console.log(x) // undefined
+    var x = 10; // Declared at beginning but value assigned only here
+}
+console.log(x); // 1
+fn();           // 2
+fn2();          // undefined
+console.log(x); // 1
+```
+
+> https://www.w3schools.com/js/js_hoisting.asp
 
 ---
 
@@ -593,7 +674,7 @@ setTimeout(()=>{
 ## Hands-on
 
 Javascript promises - mastering the asynchronous - **codingame.com**
-> Steps 1 to 4: https://www.codingame.com/playgrounds/347/
+> Steps 1 to 4: https://www.codingame.com/playgrounds/347/ or https://tech.io/playgrounds/347
 
 ---
 
@@ -779,7 +860,7 @@ async function asyncExample() {
 ## Hands-on
 
 Javascript promises - mastering the asynchronous - **codingame.com**
-> Steps 5 to 17: https://www.codingame.com/playgrounds/347/
+> Steps 5 to 17: https://www.codingame.com/playgrounds/347/ or https://tech.io/playgrounds/347
 
 ---
 

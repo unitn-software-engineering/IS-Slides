@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Implementing WebAPIs in Express.js'
-footer: 'Marco Robol - Trento, 2024 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **Implementing WebAPIs in Express.js**
@@ -15,7 +15,32 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
+*Academic year 2024/2025 - Second semester*
+
+---
+
+# Contents
+
+- How to implement a web service with [Express.js](https://expressjs.com/it/) web framework.
+
+---
+
+## Where are we headed? ... a web service backend
+
+```javascript
+// https://github.com/unitn-software-engineering/EasyLib/blob/master/app/books.js
+router.get('', async (req, res) => {
+    // https://mongoosejs.com/docs/api.html#model_Model.find
+    let books = await Book.find({});
+    books = books.map( (book) => {
+        return {
+            self: '/api/v1/books/' + book.id,
+            title: book.title
+        };
+    });
+    res.status(200).json(books);
+});
+```
 
 ---
 
