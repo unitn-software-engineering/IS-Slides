@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'MongoDB'
-footer: 'Marco Robol - Trento, 2023 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **MongoDB and Mongoose**
@@ -15,7 +15,7 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
+*Academic year 2024/2025*
 
 ---
 
@@ -40,10 +40,6 @@ A distributed, **document-oriented** database that stores data in JSON-like docu
 - **Queries** and **aggregation** provide powerful ways to access and analyze your data.
 
 > https://www.mongodb.com/en-us/what-is-mongodb
-
----
-
-
 
 ---
 
@@ -94,6 +90,9 @@ A distributed, **document-oriented** database that stores data in JSON-like docu
 
     mongodb+srv://admin:<password>@cluster0.f9mww.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
+---
+
+# Let's use my connection string:::
 ---
 
 # Mongoose mongoosejs.com
@@ -198,15 +197,17 @@ await doc.save();
 ```javascript
 // Subdocument
 const subdocumentSchema = new mongoose.Schema({
-  child: new mongoose.Schema({ name: String, age: Number })
+  child: new mongoose.Schema({ name: String, age: { type: Number, default: 0 } })
 });
 const Subdoc = mongoose.model('Subdoc', subdocumentSchema);
+// subdoc.child may be undefined
 
 // Nested path
 const nestedSchema = new mongoose.Schema({
-  child: { name: String, age: Number }
+  child: { name: String, age: { type: Number, default: 0 } }
 });
 const Nested = mongoose.model('Nested', nestedSchema);
+// nested.child will never be undefined
 ```
 
 ---
@@ -328,6 +329,29 @@ app.locals.db = mongoose.connect(process.env.DB_URL,
     app.listen(8080, () => { console.log(`Server listening`) });
 });
 ```
+
+---
+
+## Define your own collections and their schema
+
+- Starting from your APIs resources, define collections and their schema.
+
+- You may incorporate some resources into others as subdocuments. For example, booklendings could be nested under book.
+
+```javascript
+// https://mongoosejs.com/docs/subdocs.html#adding-subdocs-to-arrays
+const Parent = mongoose.model('Parent');
+const parent = new Parent();
+parent.children.push({ name: 'Liesl' });
+
+// https://mongoosejs.com/docs/subdocs.html#subdoc-parents
+const schema = new Schema({
+  docArr: [{ name: String }],
+  singleNested: new Schema({ name: String })
+});
+````
+
+- Apply populate() when necessary.
 
 ---
 

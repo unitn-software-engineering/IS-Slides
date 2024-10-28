@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Authentication'
-footer: 'Marco Robol - Trento, 2024 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **Authentication**
@@ -15,7 +15,7 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
+*Academic year 2024/2025*
 
 ---
 
@@ -193,14 +193,28 @@ marco.robol@unitn.it
 
 ---
 
-# Back-up slides
-
----
-
-# Stateless Authentication for RESTful APIs
-## vs.
 # Google Authentication
 
-Using **Passport** to *Sign In With Google* and **JWT** to sign and verify token and allows for stateless
+https://developers.google.com/identity/gsi/web/guides/overview?hl=it
+
+```javascript
+const client = new OAuth2Client( GOOGLE_CLIENT_ID );
+async function verify( token ) {
+	const ticket = await client.verifyIdToken({
+		idToken: token,
+		// audience: GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+		// Or, if multiple clients access the backend:
+		//[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+	});
+	const payload = ticket.getPayload();
+	const userid = payload['sub'];
+	// If the request specified a Google Workspace domain:
+	// const domain = payload['hd'];
+	return payload;
+}
+```
+> https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=it#node.js
+
+
 
 ---
