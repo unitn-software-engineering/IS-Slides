@@ -21,78 +21,101 @@ Software Engineering - Lab
 
 # Contents of today class
 
-- [MongoDB](www.mongodb.com) and [Mongoose](https://mongoosejs.com/)
+- MongoDB https://www.mongodb.com
+  - What is MongoDB? Locally or in the cloud? How to access your MongoDB?
+- Mongoose https://mongoosejs.com
+  - Schema, Model (querying), Document. 
 
-> EasyLib: github.com/unitn-software-engineering/EasyLib
+Tools and services:
+- MongoDB [Community Edition](https://www.mongodb.com/products/self-managed/community-edition)
+- MongoDB Atlas https://cloud.mongodb.com/
+- [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
+  - or alternatively MongoDB [Compass GUI](https://www.mongodb.com/products/compass)
 
 ---
 
-# MongoDB - mongodb.com
+# What is MongoDB - [mongodb.com](https://www.mongodb.com)
 
 A distributed, **document-oriented** database that stores data in JSON-like documents, where fields can vary from document to document.
 
 - **Database** - a physical container for collections. Each database gets its own set of files on the file system;
-
 - **Collection** - a group of documents that exists within a single database. Collections do not enforce a schema;
-
 - **Document** model maps to the **objects** in your application code; Typically, all documents in a collection are of similar or related purpose;
-
+  ```json
+  { "name": "notebook",
+    "size": { "height": 11, "width": 8.5, "unit": "in" },
+    "tags": [ "college-ruled", "perforated"] }
+  ```
 - **Queries** and **aggregation** provide powerful ways to access and analyze your data.
 
 > https://www.mongodb.com/en-us/what-is-mongodb
 
 ---
 
-## Getting Started
+## Run MongoDB
 
-> https://www.mongodb.com/docs/guides/server/introduction/
+##### Locally:
 
-- Define Your Data Set
-- Start Thinking in JSON
-- Identify Candidates for Embedded Data and Model Your Data
+- Install MongoDB Community Edition
+  https://www.mongodb.com/docs/manual/administration/install-community/
 
-```json
-{ "name": "notebook",
-  "qty": 50,
-  "rating": [ { "score": 8 }, { "score": 9 } ],
-  "size": { "height": 11, "width": 8.5, "unit": "in" },
-  "status": "A",
-  "tags": [ "college-ruled", "perforated"]
+##### In the cloud:
+
+- Register on [MongoBD Atlas](https://cloud.mongodb.com), create a new Project, and create a Free Cluster
+- `Database Access` -> `Add database user` -> `Edit Password`
+- `Network Access` -> `Add IP address` -> `0.0.0.0/0` (to allow any IP)
+- `Clusters` -> `Connect` -> Get conection String and replace <db_password>
+  e.g. `mongodb+srv://admin:<db_password>@cluster0.jyosd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
+---
+
+## Access your MongoDB with UI tools: MongoDB for **VS Code**
+
+> https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
+> or alternatively MongoDB Compass https://www.mongodb.com/products/compass
+
+- **Let's try to connect**:
+  - to your local server `mongodb://localhost:27017/`
+  - to EasyLib cluster on Atlas cloud: `mongodb+srv://admin:<password>@cluster0.jyosd.mongodb.net/?retryWrites=true&w=majority`
+
+---
+
+## Access your MongoDB with MongoDB **Shell** `mongosh` https://www.mongodb.com/docs/mongodb-shell/
+- `brew install mongosh`
+- `mongosh "mongodb://localhost:27017/"`
+- `db` to list all databases
+-  `use <database_name>` to switch to a database
+- `show collections` to list all collections in the current database
+- `db.<collection_name>.find()` to list all documents in the current collection
+- `db.<collection_name>.insertOne({})` to insert a new document in the current collection
+
+---
+
+## Access your MongoDB with MongoDB **Drivers** https://www.mongodb.com/docs/guides/crud/install/:
+- Node.js `npm install mongodb`
+```javascript
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://localhost:27017/";
+const client = new MongoClient(uri);
+async function run() {
+  try {
+    await client.connect();
+    // database and collection code goes here
+    const db = client.db("sample_guides");
+    const coll = db.collection("planets");
+    // find code goes here
+    const cursor = coll.find();
+    // iterate code goes here
+    await cursor.forEach(console.log);
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
 }
+run().catch(console.dir);
+
 ```
 
----
-
-## Get MongoDB
-
-- Install MongoDB locally - www.mongodb.com/try/download/community
-  - Tutorial https://www.mongodb.com/docs/guides/server/install/
-- Use MongoDB as a service - cloud.mongodb.com
-- Develop on codesandbox.io or replit.com 
-
-
-## MongoDB Shell `mongosh`
-
-- https://www.mongodb.com/docs/mongodb-shell/run-commands/
-
----
-
-## MongoDB as a service - cloud.mongodb.com
-
-- Register on cloud.mongodb.com
-- Create a new project
-- Build a Database (Free version)
-  - Setup username and password used to connect db
-- Go to Network Access -> Add IP adress -> Allow Access from Anywhere 
-- Go back on 'Datbase' Click and click on 'Connect' to get connection details.
-
-> Replace <password> with the password for the admin user. Replace myFirstDatabase with the name of the database that connections will use by default. Ensure any option params are URL encoded.
-
-    mongodb+srv://admin:<password>@cluster0.f9mww.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-
----
-
-# Let's use my connection string:::
 ---
 
 # Mongoose mongoosejs.com
