@@ -21,8 +21,15 @@ Software Engineering - Lab
 
 # Contents
 
-- Token-based RESTful access control
-- Implementation in EasyLib
+- Authentication and Access Control
+  - RESTful is Stateless (no session)
+  - Token-based
+  - What is a JWT token?
+  - Authentication on RESTful EasyLib
+
+- Implementation in Express.js (EasyLib)
+  - Authentication endpoint APIs
+  - Authorization middlewares
 
 ---
 
@@ -38,7 +45,13 @@ Stateless interaction means: **no sessions**! To implement access control, we sh
 
 ---
 
-# Bearer Authentication
+![w:1200](traditionalVsTokenBasedAuthentication.jpg)
+
+> https://www.wallarm.com/what/token-based-authentication
+
+---
+
+## Token-based Authentication
 
 > https://blog.restcase.com/4-most-used-rest-api-authentication-methods/
 
@@ -52,28 +65,51 @@ The Bearer authentication scheme was originally created as part of OAuth 2.0 in 
 
 ---
 
-# JSON Web Tokens - jwt.io
+## What is a JWT token?
 
-> https://jwt.io/introduction/
+![w:300](debugger.png)
 
-#### Authenticate and get a new token
+Play with JSON Web Tokens at [jwt.io](https://jwt.io/)
 
-Send a `POST` request to `/api/authenticate` with `{name: 'admin', password: '123'}` encoded as `x-www-form-urlencoded`. 
+---
 
-#### Send the token to get authorized
+![w:1000](JWTtokenBasedAuthentication.jpg)
 
-- Send the token in the **HEADER**: `x-access-token` or `Authorization: Bearer <token>`
-- You can also send the token as a **URL** parameter: `/api/users?token=YOUR_TOKEN`
+> https://www.wallarm.com/what/token-based-authentication
 
-Test this with EasyLib on `GET /api/users`!
+---
+
+# Let's try authenticate on EasyLib RESTful token-based authentication
+
+#### **Authenticate** and get a new token
+
+- Send a `POST` request to `/api/v1/authenticate` with body `{name: 'admin', password: '123'}` encoded as `json` or `x-www-form-urlencoded`
+- Try at https://easy-lib.onrender.com/api/v1/authenticate
+
+#### Send the token to get **authorized**
+
+- Send the token in the **HEADER**: `x-access-token`
+  - or in the **HEADER**: `Authorization: Bearer <token>`
+  - or as a **URL** parameter: `/api/v1/booklendings?token=YOUR_TOKEN`
+- Try this at https://easy-lib.onrender.com/api/v1/booklendings
+
+---
+
+![w:600](TokenBasedAuthentication.png)
+
+> https://www.permit.io/blog/what-is-token-based-authentication
 
 ---
 
 # Implementation in EasyLib
 
-> http://github.com/unitn-software-engineering/EasyLib
+> **EasyLib** https://github.com/unitn-software-engineering/EasyLib
+> *VueFrontend* - https://github.com/unitn-software-engineering/EasyLibVue
+> Demo APIs - https://easy-lib.onrender.com/api/v1
+> Demo Basic Frontend - https://easy-lib.onrender.com
+> Demo Vue Frontend - https://easy-lib.onrender.com/EasyLibApp or https://unitn-software-engineering.github.io/EasyLibApp/
 
-JWT Bearer token authentication for Express JS via Middlewears and Request-Response pipeline.: https://medium.com/ms-club-of-sliit/jwt-bearer-token-authentication-for-express-js-5e95bf4dead0
+JWT token authentication for Express JS via Middlewears: https://medium.com/ms-club-of-sliit/jwt-bearer-token-authentication-for-express-js-5e95bf4dead0
 
 Install JWT module for Node.js `$ npm install jsonwebtoken`
 
@@ -119,7 +155,7 @@ Locally, we need to set our `SUPER_SECRET` system variable before running our ap
 
 ---
 
-## Dotenv - www.npmjs.com/package/dotenv
+# Dotenv - www.npmjs.com/package/dotenv
 
 **Dotenv** (`$ npm install dotenv`) loads values from `.env` file and made them available within the application as environment variables in `process.env.*`
 
@@ -216,5 +252,3 @@ async function verify( token ) {
 > https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=it#node.js
 
 
-
----

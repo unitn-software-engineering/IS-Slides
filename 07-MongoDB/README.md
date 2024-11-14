@@ -113,7 +113,6 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
 ```
 
 ---
@@ -127,25 +126,32 @@ run().catch(console.dir);
 
 ---
 
-## Get Mongoose
+## Getting started with Mongoose
 
-    $ npm install mongoose
+1. `$ npm install mongoose`
+2. Connect
+    ```javascript
+    const mongoose = require('mongoose');
+    mongoose.connect('mongodb://localhost:27017/test');
+    ```
+3. Create document
+    ```javascript
+    const Cat = mongoose.model('Cat', { name: String });
+    const kitty = new Cat({ name: 'Zildjian' });
+    kitty.save().then(() => console.log('meow'));
+    ```
+4. Query
+    ```javascript
+    const cats = await Cat.find().exec();
+    ```
 
-```javascript
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test');
-
-const Cat = mongoose.model('Cat', { name: String });
-
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
-```
-
-> https://mongoosejs.com/docs/guide.html
+> https://mongoosejs.com/docs/index.html
 
 ---
 
-## Defining your schema
+## Defining your **schema**
+
+> https://mongoosejs.com/docs/api/schema.html
 
 ```javascript
 import mongoose from 'mongoose';
@@ -158,62 +164,18 @@ const bookSchema = new Schema({
   comments: [{ body: String, date: Date }],
   date: { type: Date, default: Date.now },
   hidden: Boolean,
-  meta: {
-    votes: Number,
-    favs:  Number
-  }
+  meta: { votes: Number, favs:  Number }
 });
 ```
 
----
-
 **Ids** - By default, Mongoose adds an _id property to your schemas.
-
 ```javascript
-bookSchema.path('_id'); // ObjectId { ... }
-```
-
-## Creating a model
-
-To use our schema definition, we need to convert our **bookSchema** into a **Model** we can work with. To do so, we pass it into mongoose.model(modelName, schema):
-
-```javascript
-const BookModel = mongoose.model('Book', bookSchema);
-```
-
-When you create a new document, a new _id of type ObjectId is created.
-
-```javascript
-const doc = new BookModel();
-doc._id instanceof mongoose.Types.ObjectId; // true
+  _id: Schema.Types.ObjectId
 ```
 
 ---
 
-## Querying
-
-> https://mongoosejs.com/docs/models.html#querying
-
-Finding documents is easy with Mongoose, which supports the rich query syntax of MongoDB. Documents can be retrieved using a model's **find**, **findById**, **findOne**, or **where** static methods.
-
-```javascript
-BookModel.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
-```
-
-## Saving
-
-> https://mongoosejs.com/docs/documents.html#updating-using-save
-
-
-```javascript
-const doc = await MyModel.findOne();
-doc.name = 'foo';
-await doc.save();
-```
-
----
-
-# Subdocuments versus Nested Paths
+### Subdocuments versus Nested Paths
 
 > https://mongoosejs.com/docs/subdocs.html#subdocuments-versus-nested-paths
 
@@ -235,7 +197,46 @@ const Nested = mongoose.model('Nested', nestedSchema);
 
 ---
 
-# Populate
+## Creating a **model**
+
+> https://mongoosejs.com/docs/api/model.html
+
+To use our schema definition, we need to convert our **bookSchema** into a **Model** we can work with. To do so, we pass it into mongoose.model(modelName, schema):
+
+```javascript
+const BookModel = mongoose.model('Book', bookSchema);
+// Constructing Documents
+const doc = new BookModel({title:  'The Mongoose Docs'});
+await doc.save();
+// Querying
+const q1 = await BookModel.find({}).where('date').gt(oneYearAgo).exec();
+const q2 = await BookModel.find({ year: { $gt: 2023 } });
+// Deleting
+await Tank.deleteOne({ size: 'large' });
+// Updating
+await Tank.updateOne({ size: 'large' }, { name: 'T-90' });
+```
+
+---
+
+## Querying and Saving **Documents**
+
+> https://mongoosejs.com/docs/models.html#querying
+> https://mongoosejs.com/docs/documents.html#updating-using-save
+
+Mongoose supports the **rich query syntax of MongoDB** (List of MongoDB Query and Projection Operators https://www.mongodb.com/docs/manual/reference/operator/query). Documents can be retrieved using a model's **find**, **findById**, or **findOne** static methods. 
+
+```javascript
+BookModel.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
+const books = await BookModel.find({ year: { $gt: 2023 } });
+const doc = await MyModel.findOne();
+book.title = 'foo';
+await book.save();
+```
+
+---
+
+##   Populate
 
 > https://mongoosejs.com/docs/populate.html
 
@@ -259,11 +260,53 @@ Story.findOne({ title: 'Casino Royale' })
 
 ---
 
-# MongoDB with mongoose in EasyLib
+# How to avoid exposing *connection string* in the code? 
+
+We don't want our password in the source code. Let's use env variable e.g. `DB_URL`.
+
+```javascript
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DB_URL);
+```
+
+How can we set the `DB_URL` env variable when we run the script?
+
+1. `$ npm install dotenv`
+2. ```javascript
+   // .env file
+   DB_URL=mongodb://localhost:27017/mydatabase
+   ```
+3. ```javascript
+   require('dotenv').config()
+   const mongoose = require('mongoose');
+   mongoose.connect(process.env.DB_URL);
+   ```
+4. `node -r dotenv/config your_script.js`
+
+---
+
+# dotenv
+
+> https://www.npmjs.com/package/dotenv
+> `$ npm install dotenv`
+
+Dotenv **module** loads environment variables from a `.env` file into `process.env.`:
+```javascript
+require('dotenv').config()
+console.log(process.env.DB_URL)
+```
+
+Alternatively, with **preload** (Node.js --require (-r) command line option to preload), we avoid having dotenv dependency in production:
+- Install dotenv as a dev dependency `npm install dotenv --save-dev`
+- `node -r dotenv/config your_script.js`
+
+---
+
+# Mongoose in EasyLib
 
 > https://github.com/unitn-software-engineering/EasyLib
 
-How to run: `npm run start_local`
+How to run: `npm run dev`
 
 #### package.json
 ```json
@@ -272,24 +315,7 @@ How to run: `npm run start_local`
     "dev": "node -r dotenv/config index.js" }, ...
 ```
 
-What is *-r dotenv/config* ? ...
-
----
-
-### dotenv - www.npmjs.com/package/dotenv
-
-    $ npm install dotenv
-
-> Dotenv loads environment variables from a .env file into process.env.
-
-```javascript
-require('dotenv').config()
-console.log(process.env) // remove this after you've confirmed it working
-```
-
-**Preload** - You can use the --require (-r) command line option to preload dotenv. By doing this, you do not need to require and load dotenv in your application code.
-
-    $ node -r dotenv/config your_script.js
+What is *-r dotenv/config*? It is used to preload dotenv and expose variable from .env file as environment variables in process.env. *This is useful for development environment where we want to avoid having dotenv dependency in production*.
 
 ---
 
