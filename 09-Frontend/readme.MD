@@ -298,6 +298,48 @@ else
 
 ---
 
+**TODO**: Now, try access the APIs from your project backend!
+
+Because the html page loaded in the browser (e.g. file://index.html) resolves to a different url with respect to our APIs backend (e.g. http://localhost:3000), we won't be able to make asynchronous requests from within the browser, because of the CORS policy!
+
+## Cross-Origin Resource Sharing policy
+
+> Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.
+
+
+`npm install cors` https://expressjs.com/en/resources/middleware/cors.html
+
+```javascript
+const cors = require('cors')
+app.use(cors())
+```
+
+**TODO**: Add support to CORS in your backend!
+
+---
+
+> ### More datails on CORS in Express.js
+> 
+> > CORS also relies on a mechanism by which browsers make a "preflight" request, in order to check that the server hosting the cross-origin resource will permit the actual request. https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+> 
+> ```javascript
+> app.use(function (req, res, next) { // Add headers before the routes are defined
+>     // Website you wish to allow to connect
+>     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+>     // Request methods you wish to allow
+>     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+>     // Request headers you wish to allow
+>     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+>     // Set to true if you need the website to include cookies in the requests sent
+>     // to the API (e.g. in case you use sessions)
+>     res.setHeader('Access-Control-Allow-Credentials', true);
+>     // Pass to next layer of middleware
+>     next();
+> });
+> ```
+
+---
+
 # EasyLib basic frontend
 
 EasyLib basic WebApp is composed by an html file `\static\index.html` and some javascript code in `\static\script.js`, where data are fetched from the WebService and used to updated the page accordingly. **This is the minumum requirement for the project**! Source code at https://github.com/unitn-software-engineering/EasyLib.
@@ -384,6 +426,25 @@ function login() {
 
 ---
 
+# `LocalStorage` and `sessionStorage`
+
+Permettono di salvare coppie key/value nel browser. I dati rimangono memorizzati anche al ricaricamento della pagina (sessionStorage) o al riavvio del browser (localStorage). 
+
+> (i) Rispetto ai cookies, il server non può manipolarne la memorizzazione tramite HTTP headers e questi **non vengono inviati con ogni richiesta**. (ii) **L’archiviazione è legata alla sorgete** (origin) (domain/protocol/port triplet), quindi sotto domini differenti non possono accedere ai dati tra di loro. https://it.javascript.info/localstorage
+
+```javascript
+localStorage.setItem('test', 1);            // memorizza la coppia key/value.
+alert( localStorage.getItem('test') ); // 1 // legge la coppia key/value
+// .removeItem(key): rimuove la key, ed il relativo value.
+// .clear(): rimuove tutti gli elementi.
+// .key(index): lettura della key all’indice index.
+// .length: il numero di oggetti archiviati.
+```
+
+**TODO**: Stora a value in localStorage and read it. Use this for login token.
+
+---
+
 # Declarative UI Components
 #### Front-end Frameworks
 
@@ -422,7 +483,9 @@ function login() {
 
 ---
 
-**Declarative Rendering**: Vue extends standard HTML with a template syntax that allows us to declaratively describe HTML output based on JavaScript state.
+## The core feature of Vue is **declarative rendering**
+
+Vue extends standard HTML with a template syntax that allows us to declaratively describe HTML output based on JavaScript state.
 
 ```javascript
 <div id="app">
@@ -461,72 +524,6 @@ const count = ref(0);
 > const count = ref(0)                    // reactive "refs"
 > function increment() { count.value++ } ...
 > ```
-
----
-
-## Using Vue Single File Components (SFCs) (With Build Tools)
-
-> A build setup allows us to use Vue Single-File Components (SFCs). The official Vue build setup is based on Vite, a frontend build tool.
-> https://vuejs.org/guide/quick-start.html#with-build-tools
-
-- `npm init vue@latest` This command will install and execute create-vue, the official Vue project scaffolding tool.
-- `npm install`
-- `npm run dev`
-    ```vue
-    <!-- src/components/App.vue -->
-    <script setup> ... </script>
-    <template> ... </template>
-    <style scoped> ... </style>
-    ````
-- Install VSCode [Vue - Official extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-**TODO**: Run this to create a Vue project! Discuss about the structure and the build process.
-
----
-
-## Install **tailwindcss** and **DaisyUI** with `npm`
-
-> **tailwindcss** https://tailwindcss.com/docs/installation/using-postcss
-> **DaisyUI** https://daisyui.com/docs/install/
-
-- `npm install -D tailwindcss postcss autoprefixer daisyui`
-- `npx tailwindcss init -p`
-- Add the paths to all of your template files in your `/tailwind.config.js`.
-    ```javascript
-    import daisyui from 'daisyui';
-    export default {    content: ["./src/**/*.{html,js,vue}"],
-                        theme: { extend: {} },
-                        plugins: [ daisyui ]                    }
-    ```
-- Include tailwind in your `/src/assets/main.css` file
-    ```css
-    @tailwind base; @tailwind components; @tailwind utilities;
-    ```
-- `npm run dev`
-
----
-
-## The core feature of Vue is **declarative rendering**
-
-Using a template syntax that extends HTML, we can describe how the HTML should look based on JavaScript state. When the state changes, the HTML updates automatically!
-
-```html
-<!-- /src/App.vue -->
-<script setup>
-    import { ref } from "vue";
-    const message = ref('Hello Vue!');
-    const count = ref(0);
-</script>
-<template>
-    <header class="pr-10">
-        <h1 class="text-red-500 text-3xl font-bold underline">{{ message }}</h1>
-    </header>
-    <main>
-        <button class="btn btn-outline btn-accent" @click="count++"> Count is: {{ count }} </button>
-    </main>
-</template>
-<style scoped> </style>
-```
 
 ---
 
@@ -620,9 +617,51 @@ const todos = ref([
 
 ---
 
-## Components
+## Using Vue Single File Components (SFCs) (With Build Tools)
 
-So far, we've only been working with a single component. Real Vue applications are typically created with nested components.
+> A build setup allows us to use Vue Single-File Components (SFCs). The official Vue build setup is based on Vite, a frontend build tool.
+> https://vuejs.org/guide/quick-start.html#with-build-tools
+
+- `npm init vue@latest` This command will install and execute create-vue, the official Vue project scaffolding tool.
+- `npm install`
+- `npm run dev`
+    ```vue
+    <!-- src/components/App.vue -->
+    <script setup> ... </script>
+    <template> ... </template>
+    <style scoped> ... </style>
+    ````
+- Install VSCode [Vue - Official extension](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+**TODO**: Run this to create a Vue project! Discuss about the structure and the build process.
+
+---
+
+## Install **tailwindcss** and **DaisyUI** with `npm`
+
+> **tailwindcss** https://tailwindcss.com/docs/installation/using-postcss
+> **DaisyUI** https://daisyui.com/docs/install/
+
+- `npm install -D tailwindcss postcss autoprefixer daisyui`
+- `npx tailwindcss init -p`
+- Add the paths to all of your template files in your `/tailwind.config.js`.
+    ```javascript
+    import daisyui from 'daisyui';
+    export default {    content: ["./src/**/*.{html,js,vue}"],
+                        theme: { extend: {} },
+                        plugins: [ daisyui ]                    }
+    ```
+- Include tailwind in your `/src/assets/main.css` file
+    ```css
+    @tailwind base; @tailwind components; @tailwind utilities;
+    ```
+- `npm run dev`
+
+---
+
+## Vue Components
+
+So far, we've only been working with a single component. Real Vue applications are typically created with nested components. https://vuejs.org/tutorial/#step-11
 
 ```html
 <!-- App.vue -->
@@ -641,7 +680,7 @@ So far, we've only been working with a single component. Real Vue applications a
 </template>
 ```
 
-> https://vuejs.org/tutorial/#step-11
+**TODO** What are these .vue files?
 
 ---
 
@@ -709,67 +748,11 @@ In addition to receiving props, a child component can also emit events to the pa
 # EasyLib Vue-based Frontend
 
 Repository - https://github.com/unitn-software-engineering/EasyLibVue
-
 Deploy - https://unitn-software-engineering.github.io/EasyLibApp/
 
----
-
-## Creation with build tools - vuejs.org/guide/quick-start.html#local
-
-Clone EasyLibVue, or start from scratch, `npm init vue@latest` to execute create-vue.
-
-https://github.com/unitn-software-engineering/EasyLibVue/commit/c8c43e8d684817e91fd81a01074c27914899bf62 - Here is what create-vue provides us.
-
-To run: `npm install` and `npm run dev`. Application will be server on port 3030.
-
-Because our frontend origin resolves to a different domain with respect to where or APIs are exposed (port 8080), we won't be able to make asynchronous requests from the browser to our APIs server, because of the Cross-Origin policy of browser!
-
----
-
-## CORS and Preflight request
-
-> Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.
-https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-
-> CORS also relies on a mechanism by which browsers make a "preflight" request to the server hosting the cross-origin resource, in order to check that the server will permit the actual request. In that preflight, the browser sends headers that indicate the HTTP method and headers that will be used in the actual request.
-https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
-
-> Tutorial - https://web.dev/cross-origin-resource-sharing/
-
----
-
-### Supporting CORS in Node.js `EasyLib\app\app.js`
-
-```javascript
-app.use(function (req, res, next) { // Add headers before the routes are defined
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    // Pass to next layer of middleware
-    next();
-});
-```
-
-#### Using a module https://expressjs.com/en/resources/middleware/cors.html
-
-```javascript
-const cors = require('cors')
-app.use(cors())
-```
-
----
-
-## Let's go back on our EasyLib Vue frontend
-
-`EasyLibVue\src\App.vue`
 
 ```html
+<!-- `EasyLibVue\src\App.vue` -->
 import Login from '@/components/Login.vue'
 ...
 <nav>

@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Testing'
-footer: 'Marco Robol - Trento, 2024 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **Testing**
@@ -15,25 +15,11 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2023/2024 - Second semester*
-
----
-
-# Links
-
-> **EasyLib repos**
-> BackEnd - https://github.com/unitn-software-engineering/EasyLib
-> Vue FrontEnd - https://github.com/unitn-software-engineering/EasyLibVue
-
-> **EasyLib deploys**
-> Basic Frontend - https://easy-lib.onrender.com/
-> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp/ or https://unitn-software-engineering.github.io/EasyLibApp/
-
 ---
 
 # Testing with Jest
 
-> A JavaScript Testing Framework with a focus on simplicity - jestjs.io
+> A JavaScript Testing Framework with a focus on simplicity - [jestjs.io](https://jestjs.io)
 
 ---
 
@@ -50,11 +36,13 @@ Software Engineering - Lab
     ```
     > https://jestjs.io/docs/en/getting-started.html
 
-3. Run `jest`
+3. In another file create and export the function `sum()`
+
+4. Run `jest`
 
 ---
 
-## Testing a function *concatenateStrings(a, b)*
+## Another example: testing *concatenateStrings(a, b)*
 
 `./someModule.js`
 ```javascript
@@ -65,13 +53,13 @@ module.exports = concatenateStrings
 `./someModule.test.js`
 ```javascript
 const conc = require('./someModule')
-test('conc 2+2', () => {
+test('conc(2,2)', () => {
     expect(conc(2, 2)).toBe('22');
 });
-test('concat test', () => {
+test('concat("a","b")', () => {
     expect(conc('a','b')).toBe('ab');
 });
-test('concat null', () => {
+test('concat(null,null)', () => {
     expect(conc(null,null)).toBe('nullnull');
 });
 ```
@@ -80,33 +68,36 @@ test('concat null', () => {
 
 ## Testing an API with `node-fetch`
 
-`./api.test.js`
+> When you have code that runs **asynchronously**, Jest needs to know when the code it is testing has completed, before it can move on - https://jestjs.io/docs/asynchronous
+
+`npm install --save-dev node-fetch` https://www.npmjs.com/package/node-fetch 
+
 ```javascript
+// ./api.test.js
 const fetch = require("node-fetch");
-const url = process.env.HEROKU || "http://localhost:3000"
+const url = process.env.API_URL || "https://easy-lib.onrender.com/api/v1"
 it('works with get', async () => {
     expect.assertions(1)
-    expect( ( await fetch(url) ).status ).toEqual(200)
-})
+    expect( ( await fetch(url+"/books") ).status ).toEqual(200)
+})                                         // TODO: try up to here with the GET!
 it('works with post', async () => {
     expect.assertions(1)
-    var response = await fetch(url+'/courses', {
-        method: 'POST', body: JSON.stringify({name: 'hello course'}),
+    var response = await fetch(url+'/books', {
+        method: 'POST', body: JSON.stringify({title: 'Testing with jest'}),
         headers: { 'Content-Type': 'application/json' }
     })
     expect( ( await response.json() ).status ).toEqual(201)
 })
 ```
-`npm install --save-dev node-fetch`: This requires the server to be running!
 
 ---
 
 ## Testing an API with `supertest`
 
-> https://www.npmjs.com/package/supertest `npm install --save-dev supertest`
+`npm install --save-dev supertest` https://www.npmjs.com/package/supertest
 
-`EasyLib\app\app.test.js`
 ```javascript
+// EasyLib\app\app.test.js
 const request = require('supertest');
 const app     = require('./app');
 
@@ -121,13 +112,15 @@ test('GET / should return 200', () => {
 });
 ```
 
+**TODO**: Create a simple Express.js application in app.js that replies with `200` at `GET /`
+
 ---
 
-# Configuring Jest on EasyLib using *dotenv module*
+# Configuring Jest environment variables
 
 > https://lusbuab.medium.com/using-dotenv-with-jest-7e735b34e55f
 
-1. Add *test* **script** to `package.json`:
+1. Add `test` *script* to `package.json`:
 
 ```json
 "scripts": {
@@ -162,16 +155,16 @@ require("dotenv").config()
 
 ---
 
-## Testing EasyLib *token-authenticated* APIs on *mongodb* 
+## Testing *token-authenticated* APIs &  *db connection* with supertest
 
-`EasyLib\app\booklendings.test.js`
 ```javascript
+// EasyLib\app\booklendings.test.js
 const request  = require('supertest');    const app      = require('./app');
 const jwt      = require('jsonwebtoken'); const mongoose = require('mongoose');
+describe('POST /api/v1/booklendings', () => {
 
-describe('GET /api/v1/booklendings', () => {
-
-  beforeAll( async () => { jest.setTimeout(8000);
+  beforeAll( async () => {                          // establish connection to db
+    jest.setTimeout(8000);
     app.locals.db = await  mongoose.connect(process.env.DB_URL); });
   afterAll( () => { mongoose.connection.close(true); });
   
@@ -184,6 +177,8 @@ describe('GET /api/v1/booklendings', () => {
     .expect(400, { error: 'Student not specified' });
   });
 ```
+
+**TODO**: Create a mongodb-based `app.js` and *setup connection* when `supertest`!
 
 ---
 
@@ -211,26 +206,46 @@ describe('GET /api/v1/books', () => {
 });
 ```
 
+**TODO**: Try the to *mock* a function
+
 ---
 
 # Coverage
 
-Configure Jest to  activate **coverage**
+Configure Jest to activate **coverage** - [jestjs.io/docs/configuration](https://jestjs.io/docs/configuration#collectcoverage-boolean):
 
-> https://jestjs.io/docs/configuration#collectcoverage-boolean:
-
-`package.json`
 ```json
+// package.json
 "jest": {
     "verbose": true,
     "collectCoverage": true
 }
 ```
 
-Run tests with `npm run test`
+or
+
+```json
+// jest.config.json
+{
+  "verbose": true
+}
+```
 
 ---
 
 # Questions?
 
 marco.robol@unitn.it
+
+---
+
+# Links
+
+> **EasyLib repos**
+> BackEnd - https://github.com/unitn-software-engineering/EasyLib
+> Vue FrontEnd - https://github.com/unitn-software-engineering/EasyLibVue
+
+> **EasyLib deploys**
+> Basic Frontend - https://easy-lib.onrender.com/
+> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp/ or https://unitn-software-engineering.github.io/EasyLibApp/
+
