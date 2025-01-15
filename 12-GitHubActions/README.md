@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Continuous Integration - Continuous Deployment'
-footer: 'Marco Robol - Trento, 2024 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
 ---
 
 # **Continuous Integration & Deployment**
@@ -14,8 +14,6 @@ footer: 'Marco Robol - Trento, 2024 - Software Engineering'
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
-
-*Academic year 2023/2024 - Second semester*
 
 ---
 
@@ -123,6 +121,12 @@ jobs:
 
 ---
 
+# Questions?
+
+marco.robol@unitn.it
+
+---
+
 ## `.gitignore` - Ignoring files from git versioning
 
 - You can start from generic `.gitignore` file generated on www.gitignore.io, such as, https://www.gitignore.io/api/node,windows,linux,visualstudiocode
@@ -130,60 +134,3 @@ jobs:
 - **Make sure to always ingore**: `node_modules` `coverage` `.env`
 
 - Put the `.gitignore` file itself under version control `git add .gitignore`
-
----
-
-# Front-end deployment
-
-> EasyLib Front-end Repository
-> https://github.com/unitn-software-engineering/EasyLibVue
-
-> EasyLib deployed front-end application
-> https://unitn-software-engineering.github.io/EasyLibApp/
-
----
-
-## Frontend already in the same repository as your webAPIs
-
-`EasyLib\app\app.js`
-```javascript
-// Serving frontend files from process.env.FRONTEND
-app.use('/', express.static(process.env.FRONTEND || 'static'));
-// If request not handled, try in ./static
-app.use('/', express.static('static'));
-// If request not handled, try with next middlewares ...
-```
-
-`EasyLib\.env` These configurations are used only locally, never commit these settings!
-```yaml
-# Path to external frontend - If not provided, basic frontend in static/index.html is used
-FRONTEND='../EasyLibVue/dist'
-```
-
-Separately setup Heroku with appropriate environment variables!
-
----
-
-## Build and serve Vue app on *GitHubPages* pages.github.com
-
-When ready to ship app to production, run the following: `npm run build`. This generates minified html+javascript frontend in `.\dist` folder. Create a **dedicated repository for hosting** on github to host your frontend, then push your built frontend manually or with a script `EasyLibVue\deploy.sh`: 
-
-```bash
-npm run build # build Vue app
-cd dist # navigate into the build output directory
-git init
-git add -A
-git commit -m 'deploy'
-git push -f https://github.com/unitn-software-engineering/EasyLibApp.git master:gh-pages
-```
-
-***MUST be a repository dedicated to hosting, different from your Frontend repository!***
-Run `.\deploy.sh` (In case of errors, manually delete the folder `.\dist`).
-
-> https://cli.vuejs.org/guide/deployment.html#github-pages
-
----
-
-# Questions?
-
-marco.robol@unitn.it
