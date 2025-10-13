@@ -15,7 +15,7 @@ Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2024/2025 - Second semester*
+*Academic year 2024/2025*
 
 ---
 

@@ -10,7 +10,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Git - Versioning and Collaboration'
-footer: 'Software Engineering - 2024/2025, Trento - Marco Robol'
+footer: 'Software Engineering - 2025/2026, Trento - Marco Robol'
 ---
 <!-- _class: home -->
 
@@ -39,13 +39,19 @@ Software Engineering - Lab
 
 ---
 
+# Questions and answers
+
+![h:450](../vevox.png)
+
+---
+
 # What is version control?
 
 Version control systems (VCSs) are a category of software tools that help a software team manage changes to source code over time:
 
-- keeps track of every modification to the code
-- developers can turn back the clock and compare earlier versions
-- each developer may make their changes in several parts of the file tree
+- keeps track of every **modification** to the code
+- developers can turn back the clock and compare **earlier versions**
+- **each developer** may make their changes in several parts of the file tree
 
 Version control helps teams solve these kinds of problems, tracking every individual change by each contributor and helping prevent concurrent work from conflicting.
 
@@ -81,8 +87,9 @@ important bits of a project
 
 ---
 
-# Git Basics
-Git [git-scm.com](https://www.git-scm.com) is an **open source** version control application
+# Basics of **Git** 
+> ![h:30](git.png)
+> Git is a *free and open source* distributed Version Control System designed to handle everything from small to very large projects with speed and efficiency - [git-scm.com](https://www.git-scm.com)
 
 ---
 
@@ -109,21 +116,18 @@ git version 2.33.1
 
 > https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init
 
-```shell
-create a folder: ​mkdir gitlesson
-cd to that folder: ​cd gitlesson
-create a file (for example, ​pico app.js​ and enter ​const port = 3000​; and save )
-ls -la​: notice that the folder is clean, it only has that file
-
-git init​: system answers with Initialized empty Git repository in….
-ls -la​: notice the new .git file
-git status​: sys responds with (don’t worry for now if you don’t understand this text below)
-    On branch master
-    No commits yet
-    Untracked files: (use "git add <file>..." to include in what will be committed)
-        app.js
-    nothing added to commit but untracked files present (use "git add" to track)
-```
+1. create a folder: `$ ​mkdir gitlesson` and move to that folder `$ ​cd gitlesson`
+1. create a file (for example, `$ ​pico app.js​` and enter ​const port = 3000​; and save )
+1. list files `$ ls -la​`, notice that the folder is clean, it only has that file
+1. `$ git init​` system answers with Initialized empty Git repository in…
+1. `$ ls -la​` notice the new .git file, then try `$ git status​`:
+    ```shell
+        On branch master
+        No commits yet
+        Untracked files: (use "git add <file>..." to include in what will be committed)
+            app.js
+        nothing added to commit but untracked files present (use "git add" to track)
+    ```
 
 ---
 
@@ -257,12 +261,10 @@ $ git log --patch
 
 `git diff <hash> index.js ` (specify a file)
 `git diff main~` (1 commit before main)
-`git diff main~~` (2 commits before main)
-`git diff main~2` (2 commits before main)
+`git diff main~~` or `git diff main~2` (2 commits before main)
 
-> `git diff main^` (1 commit before main)
-> `git diff main^^` (2 commits before main)
-> `git diff main^2` (This is 1 commit back on second parent... see branching chapter)
+> `git diff main^` or `git diff main^^`... (1 or 2... commits before main)
+> `git diff main^2` (1 commit back on *second* parent... see *branching* chapter)
 
 ---
 
@@ -304,13 +306,15 @@ When you commit, git not only creates a new commit but advances the branch point
 
 You can use `​git switch` (or old-fashioned `​git checkout​`) to revert back your working directory to a previous commit.
 
-`git switch <branch name or hash>`
-`git switch main^` `git switch main~` (1 commit before main)
-`git switch HEAD^` `git switch HEAD~` (1 commit ago)
+```shell
+$ git switch <branch name or hash>
+```
 
-Internally, it simply **moves the HEAD** (a pointer to the current commit) to point to the specified *​branch​ or commit*:
-- when HEAD points to a **branch**, Git doesn't complain, but
-- when you **switch to a commit**, it goes into a ***detached HEAD*** state.
+Internally, it simply **moves the HEAD** (a pointer to the current commit) to point to the specified, a *​branch​ or a commit*. For example:
+- `git switch main^` `git switch main~` (1 commit before **main**)
+- `git switch HEAD^` `git switch HEAD~` (1 commit before current HEAD)
+
+> When HEAD points to a **branch**, Git doesn't complain, but when HEAD points to a **commit**, it goes into a ***detached HEAD*** state!
 
 ---
 
@@ -447,14 +451,12 @@ https://www.perforce.com/products/helix-core-apps/merge-diff-tool-p4merge
 ### Try
 
 - create a branch `git branch newport`
-- modify readme on branch
-`git add .` `git commit -m "add readme"`
-`git log --graph --decorate --oneline ​(notice HEAD and master and branch)`
+- modify readme on branch `git add .` `git commit -m "add readme"`
+- `git log --graph --decorate --oneline` notice HEAD and master and branch
 - move on newport `git switch newport`
-- modify app.js
-`git add .` `git commit -m "change port to 3001"`
+- modify app.js `git add .` `git commit -m "change port to 3001"`
 - move on master `git switch master`
-- merge `git merge newport ​- editor will open for commit message. just save.`
+- merge `git merge newport` editor will open for commit message. just save.
 
 How can we create a merge conflict?
 

@@ -504,6 +504,26 @@ function Book(title) { }
 
 ---
 
+`jsconfig.json`
+
+```json
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES2020",
+      "sourceMap": true,
+      "allowJs": true,
+      "checkJs": true
+    },
+    "exclude": [
+      "node_modules",
+      "**/node_modules/*"
+    ]
+}
+```
+
+---
+
 ## Exercises
 
 Arrays: n3 and n8 - https://medium.com/@andrey.igorevich.borisov/10-javascript-exercises-with-arrays-c44eea129fba

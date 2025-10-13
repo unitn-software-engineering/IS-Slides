@@ -27,6 +27,7 @@ Use the following tools to document and test your APIs:
 - https://editor.swagger.io/
 - https://app.apiary.io/ (No support for v3.0!)
 - https://www.postman.com/
+- OpenAPI Editor extension for VSCode
 
 ---
 
