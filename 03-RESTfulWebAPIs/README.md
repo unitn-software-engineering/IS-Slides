@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'RESTful WebAPIs'
-footer: 'Marco Robol - Trento, 2024/2025 - Software Engineering'
+footer: 'Marco Robol - Trento, 2025/2026 - Software Engineering'
 ---
 
 # **Intro to Web 2.0 and RESTful WebAPIs**
@@ -114,9 +114,11 @@ For example, given a RESTful API for managing products, the http request `GET /a
 
 ---
 
-## Operations
+## RESTful concepts
 
-CRUD operations are mapped to the standard HTTP verbs. In our example we will have that: 
+> A complete guide to RESTful [www.restapitutorial.com](https://www.restapitutorial.com/)
+
+CRUD operations are mapped to the standard HTTP verbs.
 
 | Operation | HTTP Verb    |   URI          |   Req body  | Resp body  | success |
 |-----------|--------------|----------------|-------------|------------|---------|
@@ -126,7 +128,11 @@ CRUD operations are mapped to the standard HTTP verbs. In our example we will ha
 | Update    |  PUT / PATCH | /products/:id  |  Product*   | Product    |   200   |
 | Delete    |  DELETE      | /products/:id  |  Empty      | Empty      |   204   |
 
+> https://www.restapitutorial.com/introduction/httpmethods
+
 ---
+
+### Operations
 
 - **GET** - **Read existing data** from a data source. The response can contain data such as a list of items, a single item, or even just a status message. A GET request is a **safe** and **idempotent** method, meaning that it can be repeated multiple times without having any side effects because it should only retrieve data, not modify it.
 
@@ -180,6 +186,22 @@ Use [Postman](https://www.postman.com) to test RESTful APIs at [restful-api.dev]
 7. https://pokeapi.co/ The Pokemon API is a simple API for Pokemon;
 
 > https://dev.to/ruppysuppy/7-free-public-apis-you-will-love-as-a-developer-166p
+
+---
+
+## Some examples from last year
+
+> Good examples, but not perfect, still some mistakes have been made
+
+- https://app.swaggerhub.com/apis/SunSync/SunSync/2.0.0
+
+- https://ingegneriadelsoftware.docs.apiary.io/#
+
+- https://unidomus.docs.apiary.io/#
+
+- https://app.swaggerhub.com/apis/KENNY2817QM/TrentoJOB/1.0.0
+
+- EasyLib https://easylib.docs.apiary.io/# (https://easy-lib.onrender.com, https://github.com/unitn-software-engineering/EasyLib)
 
 ---
 
