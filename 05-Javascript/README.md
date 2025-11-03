@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: '01 - Introduction to Web2.0, Javascript and Node.js'
-footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
 ---
 
 # **Introduction to Web2.0, Javascript and Node.js**
@@ -15,7 +15,7 @@ Software Engineering
 
 #### Marco Robol - marco.robol@unitn.it
 
-*Academic year 2024/2025*
+*Academic year 2025/2026*
 
 ---
 
@@ -28,6 +28,12 @@ Software Engineering
     - **Package management with NPM** - Node Package Manager
 
 In the next lab... how to implement a web service with Node.js [Express](https://expressjs.com/it/) web framework
+
+---
+
+# Questions and answers
+
+![h:450](../vevox.png)
 
 ---
 
@@ -140,16 +146,7 @@ function takeBook(book) {
 - [nodejs.org/en/docs/guides](https://nodejs.org/en/docs/guides) - Node.js documentation
 - [www.w3schools.com/nodejs](https://www.w3schools.com/nodejs/default.asp) - Node.js tutorial
 
----
-
-# Installing Node.js
-
-Get and install Node.js from [https://nodejs.org/en/](https://nodejs.org/en/).
-
-If you're using a package manager in your OS, you might find ports already available:
-- Installing nodejs using MacPorts: https://jonlabelle.com/snippets/view/shell/install-nodejs-macport
-- Installing nodejs in Ubuntu: https://websiteforstudents.com/install-the-latest-node-js-and-nmp-packages-on-ubuntu-16-04-18-04-lts/
-- If you're using anything else, you probably know what you're doing :)
+**TODO:** Get and install Node.js from [https://nodejs.org/en/](https://nodejs.org/en/).
 
 ---
 
@@ -481,52 +478,9 @@ console.log(NissanQuashqai.description());
 
 ---
 
-## JSDoc
-
-> JSDoc is a markup language used to annotate JavaScript source code files. Using comments containing JSDoc, programmers can add documentation describing the application programming interface of the code they're creating https://jsdoc.app/
-
-```javascript
-/** @type {Array<string>} */
-const names = [];
-
-/**
- * Represents a book.
- * @param {string} title - The title of the book.
- * @returns {Book}
- */
-function Book(title) { }
-
-/** @type {function(string, string)} */
-( a, b ) => { return a + b; }
-
-( /** @type {number} */ a, /** @type {number} */ b) => { return a + b; }
-```
-
----
-
-`jsconfig.json`
-
-```json
-{
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "ES2020",
-      "sourceMap": true,
-      "allowJs": true,
-      "checkJs": true
-    },
-    "exclude": [
-      "node_modules",
-      "**/node_modules/*"
-    ]
-}
-```
-
----
-
 ## Exercises
 
-Arrays: n3 and n8 - https://medium.com/@andrey.igorevich.borisov/10-javascript-exercises-with-arrays-c44eea129fba
+Arrays: n3 and n8 - https://medium.com/@andrey.igorevich.borisov/10-javascript-exercises-with-arrays-c44eea129fba or https://github.com/andrewborisov/javascript-practice
 
 Functions: n18 - https://www.w3resource.com/javascript-exercises/javascript-functions-exercises.php
 
@@ -549,7 +503,7 @@ const compact = (array) => {
 const data = [0, 1, false, 2, undefined, '', 3, null];
 console.log(compact(data)) // [1, 2, 3]
 ```
-> https://medium.com/@andrey.igorevich.borisov/10-javascript-exercises-with-arrays-c44eea129fba Es 3
+> https://github.com/andrewborisov/javascript-practice/blob/master/arrays/exercises/03-compact.js
 
 ---
 
@@ -569,7 +523,7 @@ const flatten = (array) => {
 const data = [1, 2, [3, 4, [5]]];
 console.log(flatten(data)); // [1, 2, 3, 4, 5]
 ```
-> https://medium.com/@andrey.igorevich.borisov/10-javascript-exercises-with-arrays-c44eea129fba Es 8
+> https://github.com/andrewborisov/javascript-practice/blob/master/arrays/exercises/08-flatten.js
 
 ---
 
@@ -582,6 +536,195 @@ Note : A binary search searches by splitting an array into smaller and smaller c
 ---
 
 ![height:650px](javascript-exercise-18.png)
+
+---
+
+# JSDoc
+
+> JSDoc is a markup language used to annotate JavaScript source code files. Using comments containing JSDoc, programmers can add documentation describing the application programming interface of the code they're creating https://jsdoc.app/
+
+---
+
+## Use a JSDoc tag to describe your code
+
+> https://jsdoc.app/about-getting-started
+
+```javascript
+/** This is a description of the foo function. */
+function foo() { }
+
+/** @type {Array<string>} */
+const names = [];
+
+/**
+ * Represents a book.
+ * @param {string} title - The title of the book.
+ * @returns {Book}
+ */
+function Book(title) { }
+
+/** @type {function(string, string)} */
+( a, b ) => { return a + b; }
+
+( /** @type {number} */ a, /** @type {number} */ b) => { return a + b; }                         
+```
+
+---
+
+### Configuring VSCode with `jsconfig.json`
+
+> https://code.visualstudio.com/docs/languages/jsconfig#_why-do-i-need-a-jsconfigjson-file
+
+```json
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES2020",
+      "sourceMap": true,
+      "allowJs": true,
+      "checkJs": true
+    },
+    "exclude": [
+      "node_modules",
+      "**/node_modules/*"
+    ]
+}
+```
+
+> https://dev.to/receter/no-jsconfigjson-no-fun-31b8
+
+---
+
+# Modules and package mangement
+
+> https://javascript.info/modules
+
+---
+
+## Modules systems
+
+> https://javascript.info/modules-intro - As our application grows bigger, we want to split it into multiple files, so called “modules”. So the community invented a variety of ways to organize code into modules. 
+
+- **CJS (CommonJS) and AMD (Asynchronous Module Definition)** – https://requirejs.org/docs/whyamd.html - Initially implemented by *requirejs*. Later, CJS was adopted by Node.js.
+`const doSomething = require('./doSomething');`;
+`module.exports = doSomething`;
+
+- **ESM (ES Modules)** - Javascript's proposal to implement a standard module system.
+`import doSomething from './doSomething.js';`
+`export doSomething;`
+
+---
+
+## Loading libraries 
+
+The Node.js installation comes with standard modules, e.g. 'fs' to access the file system. This module comes with the standard Node.js installation, so we do not need to install any third-party libraries (We'll get to that later in this tutorial).
+
+```javascript
+var fs = require("fs");    // CommonJS
+import fs from 'fs';       // ESM
+```
+
+The require instruction above loads the module "fs" and assigns an instance to the variable fs. Through this instance then we can have access to all the functions exported by that module. 
+
+> http://fredkschott.com/post/2014/06/require-and-the-module-system/.
+
+---
+
+## Creating and Exporting a Module
+
+```javascript
+// user.js
+export function userTemplate(user) {     // ESM
+  return `Name: ${user.name}`;
+}
+module.exports = userTemplate;           // CommonJS
+export {userTemplate as template};       // ESM
+```
+
+```javascript
+// index.js
+const userTemplate = require('./user');   // CommonJS
+import {userTemplate} from './user.js';   // ESM
+console.log( userTemplate({name:'marco'}) );
+```
+
+> https://www.sitepoint.com/understanding-module-exports-exports-node-js/
+
+---
+
+## Package mangement with npm
+
+NPM is a very powerful tool that can help you manage project dependencies and in general automate development workflows, much like `ant` or `make` in java and C.
+
+The file `package.json` contains the metadata regarding your project, including name, version, license, and dependencies. Although you can install dependencies without a `package.json` file, it is the best way to keep track of your local dependencies.
+
+> https://nodesource.com/blog/an-absolute-beginners-guide-to-using-npm/
+
+---
+
+### Package.json
+
+How do we start? We execute the command below and follow the instructions prompted. 
+
+```shell
+$ npm init
+```
+
+This generates the `package.json` file.
+
+---
+
+### Installing a module
+
+To install an external module, we can use the `npm install` command
+
+```shell
+$ npm install express
+```
+
+The save params indicates npm to add the module to the list of dependencies in the `package.json` file. Indeed, if you check its contents, you'll now see: 
+
+```json
+{
+  "name": "hello",
+  ...
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+  ...
+}
+```
+
+---
+
+### Installing project dependencies
+
+When someone shares the source code of their project (e.g. on a github), they will not put their local dependency builds with their source code but give you only the `package.json` dependecies.
+
+The way you **install** all the dependencies of the project is with the following command. This creates the `node_modules` folder with all the local dependency builds.
+```shell
+$ npm install
+```
+
+We can **uninstall** modules using the following command. This will removes the module from the `node_modules` folder and also from `package.json` project.
+```shell
+$ npm uninstall <module_name> --save
+```
+
+---
+
+## Hands-on
+
+`uuid` - For the creation of UUIDs - https://www.npmjs.com/package/uuid
+
+- Create a new npm project
+- Install `uuid` npm package
+- Use the installed package:
+```javascript
+import { v4 as uuidv4 } from 'uuid';
+uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+```
+- Do ignore node_modules folder when committing code on git
 
 ---
 
@@ -1052,140 +1195,6 @@ for ( let i=0; i<2 ; i++) {
     console.log('main');                                   // main
 }
 ```
-
----
-
-# Modules and package mangement
-
-> https://javascript.info/modules
-
----
-
-## Modules systems
-
-> https://javascript.info/modules-intro - As our application grows bigger, we want to split it into multiple files, so called “modules”. So the community invented a variety of ways to organize code into modules. 
-
-- **CJS (CommonJS) and AMD (Asynchronous Module Definition)** – https://requirejs.org/docs/whyamd.html - Initially implemented by *requirejs*. Later, CJS was adopted by Node.js.
-`const doSomething = require('./doSomething');`;
-`module.exports = doSomething`;
-
-- **ESM (ES Modules)** - Javascript's proposal to implement a standard module system.
-`import doSomething from './doSomething.js';`
-`export doSomething;`
-
----
-
-## Loading libraries 
-
-The Node.js installation comes with standard modules, e.g. 'fs' to access the file system. This module comes with the standard Node.js installation, so we do not need to install any third-party libraries (We'll get to that later in this tutorial).
-
-```javascript
-var fs = require("fs");    // CommonJS
-import fs from 'fs';       // ESM
-```
-
-The require instruction above loads the module "fs" and assigns an instance to the variable fs. Through this instance then we can have access to all the functions exported by that module. 
-
-> http://fredkschott.com/post/2014/06/require-and-the-module-system/.
-
----
-
-## Creating and Exporting a Module
-
-```javascript
-// user.js
-export function userTemplate(user) {     // ESM
-  return `Name: ${user.name}`;
-}
-module.exports = userTemplate;           // CommonJS
-export {userTemplate as template};       // ESM
-```
-
-```javascript
-// index.js
-const userTemplate = require('./user');   // CommonJS
-import {userTemplate} from './user.js';   // ESM
-console.log( userTemplate({name:'marco'}) );
-```
-
-> https://www.sitepoint.com/understanding-module-exports-exports-node-js/
-
----
-
-## Package mangement with npm
-
-NPM is a very powerful tool that can help you manage project dependencies and in general automate development workflows, much like `ant` or `make` in java and C.
-
-The file `package.json` contains the metadata regarding your project, including name, version, license, and dependencies. Although you can install dependencies without a `package.json` file, it is the best way to keep track of your local dependencies.
-
-> https://nodesource.com/blog/an-absolute-beginners-guide-to-using-npm/
-
----
-
-### Package.json
-
-How do we start? We execute the command below and follow the instructions prompted. 
-
-```shell
-$ npm init
-```
-
-This generates the `package.json` file.
-
----
-
-### Installing a module
-
-To install an external module, we can use the `npm install` command
-
-```shell
-$ npm install express
-```
-
-The save params indicates npm to add the module to the list of dependencies in the `package.json` file. Indeed, if you check its contents, you'll now see: 
-
-```json
-{
-  "name": "hello",
-  ...
-  "dependencies": {
-    "express": "^4.16.3"
-  }
-  ...
-}
-```
-
----
-
-### Installing project dependencies
-
-When someone shares the source code of their project (e.g. on a github), they will not put their local dependency builds with their source code but give you only the `package.json` dependecies.
-
-The way you **install** all the dependencies of the project is with the following command. This creates the `node_modules` folder with all the local dependency builds.
-```shell
-$ npm install
-```
-
-We can **uninstall** modules using the following command. This will removes the module from the `node_modules` folder and also from `package.json` project.
-```shell
-$ npm uninstall <module_name> --save
-```
-
----
-
-## Hands-on
-
-`package` - Easy package.json exports - This module provides an easy and simple way to export package.json data - https://www.npmjs.com/package/package
-
-- Create a new npm project
-- Install `package` npm package
-- Use the installed package:
-```javascript
-var package = require('package')(module); // contains package.json data.
-var yourAwesomeModule = {};
-yourAwesomeModule.version = package.version;
-```
-- Do ignore node_modules folder when committing code on git
 
 ---
 
