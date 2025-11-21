@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'OpenAPI'
-footer: 'Marco Robol - Trento, 2024/2025 - Software Engineering'
+footer: 'Marco Robol - Trento, 2025/2026 - Software Engineering'
 ---
 
 # **Designing and Documenting RESTful APIs with OpenAPI Specification Language**
@@ -24,10 +24,11 @@ Software Engineering - Lab
 OpenAPI Specification (formerly Swagger Specification) is an API description format for REST APIs. An OpenAPI file allows you to describe your entire API, including: endpoints and operations, input and output parameters, authentication.
 
 Use the following tools to document and test your APIs:
-- https://editor.swagger.io/
-- https://app.apiary.io/ (No support for v3.0!)
+- OpenAPI Editor in VSCode https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi
+- https://editor.swagger.io/ (or https://app.apiary.io/ but with no support for v3)
 - https://www.postman.com/
-- OpenAPI Editor extension for VSCode
+
+> Check out EasyLib APIs documentation at https://easylib.docs.apiary.io/# or https://app.swaggerhub.com/apis/IS-unitn/EasyLib/1
 
 ---
 
@@ -246,13 +247,21 @@ components:
 
 ---
 
-> Continue reading at https://swagger.io/docs/specification/v3_0/about/
+...Continue reading at https://swagger.io/docs/specification/v3_0/about/
+
+> ### Check out EasyLib APIs documentation
+>
+> - https://easylib.docs.apiary.io/#
+> - https://app.swaggerhub.com/apis/IS-unitn/EasyLib/1
+> - https://github.com/unitn-software-engineering/EasyLib/blob/master/oas3.yaml
+> 
+> Deploy https://easy-lib.onrender.com
 
 ---
 
 ## Designing your RESTful APIs 1/4 - 10 minutes
 
-Setup a **Swagger project** and synch with branch *swagger* in folder `swagger/aos3.yaml`
+Create your `oas3.yaml` in your repo and commit.
 
 ```yaml
 # https://github.com/unitn-software-engineering/EasyLib/oas3.yaml
@@ -267,8 +276,6 @@ servers:
   - url: http://localhost:8000/api/v1
     description: Localhost
 ```
-
-> Check out EasyLib APIs documentation at https://easylib.docs.apiary.io/# or https://app.swaggerhub.com/apis/IS-unitn/EasyLib/1
 
 Now, starting from your user stories, design your RESTful APIs.
 

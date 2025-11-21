@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'MongoDB'
-footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
 ---
 
 # **MongoDB and Mongoose**
@@ -14,8 +14,6 @@ footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineeri
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
-
-*Academic year 2024/2025*
 
 ---
 
@@ -34,21 +32,27 @@ Tools and services:
 
 ---
 
+# Questions and answers
+
+![h:450](../vevox.png)
+
+---
+
 # What is MongoDB - [mongodb.com](https://www.mongodb.com)
 
 A distributed, **document-oriented** database that stores data in JSON-like documents, where fields can vary from document to document.
 
-- **Database** - a physical container for collections. Each database gets its own set of files on the file system;
-- **Collection** - a group of documents that exists within a single database. Collections do not enforce a schema;
-- **Document** model maps to the **objects** in your application code; Typically, all documents in a collection are of similar or related purpose;
+- **Database** - a physical container for collections. Each with its own files on the FS;
+- **Collection** - a group of documents within a database (no schema enforced);
+- **Document** - maps to **objects** in your application code;
   ```json
   { "name": "notebook",
     "size": { "height": 11, "width": 8.5, "unit": "in" },
-    "tags": [ "college-ruled", "perforated"] }
+    "tags": [ "college-ruled", "perforated"]
+  } // Typically, all documents in a collection are of similar or related purpose
   ```
-- **Queries** and **aggregation** provide powerful ways to access and analyze your data.
 
-> https://www.mongodb.com/en-us/what-is-mongodb
+- **Queries** and **aggregation** provide powerful ways to access and analyze your data.
 
 ---
 
@@ -80,19 +84,22 @@ A distributed, **document-oriented** database that stores data in JSON-like docu
 
 ---
 
-## Access your MongoDB with MongoDB **Shell** `mongosh` https://www.mongodb.com/docs/mongodb-shell/
+## Access with `mongosh` **Shell**
+
 - `brew install mongosh`
 - `mongosh "mongodb://localhost:27017/"`
-- `db` to list all databases
--  `use <database_name>` to switch to a database
+- `show dbs` to list all databases
+- `use <database_name>` to switch to a database (created when a document is added)
 - `show collections` to list all collections in the current database
-- `db.<collection_name>.find()` to list all documents in the current collection
-- `db.<collection_name>.insertOne({})` to insert a new document in the current collection
+- `db.createCollection("<collection_name>")` to create a collection
+- `db.<collection_name>.find(<query>)` to query documents in current collection
+- `db.<collection_name>.insertOne({})` to insert a new document
+
+> https://www.mongodb.com/docs/manual/crud/
 
 ---
 
-## Access your MongoDB with MongoDB **Drivers** https://www.mongodb.com/docs/guides/crud/install/:
-- Node.js `npm install mongodb`
+## Access with **Node.js Drivers** `npm install mongodb`
 ```javascript
 const { MongoClient } = require("mongodb");
 const uri = "mongodb://localhost:27017/";
@@ -100,52 +107,47 @@ const client = new MongoClient(uri);
 async function run() {
   try {
     await client.connect();
-    // database and collection code goes here
-    const db = client.db("sample_guides");
-    const coll = db.collection("planets");
-    // find code goes here
+    const db = client.db("easylib");
+    const coll = db.collection("books");
     const cursor = coll.find();
-    // iterate code goes here
     await cursor.forEach(console.log);
-  } finally {
-    // Ensures that the client will close when you finish/error
+  } finally {    // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
 run().catch(console.dir);
 ```
 
+> https://www.mongodb.com/docs/drivers/node/current/
+
 ---
 
-# Mongoose mongoosejs.com
+# Mongoose
 
-> elegant mongodb object modeling for node.js
-
-> Mongoose provides a straight-forward, **schema-based** solution to model your application data. It includes *built-in type casting, validation, query building, business logic hooks* and more, out of the box.
-
+> https://mongoosejs.com/docs/index.html - Mongoose provides an elegant **MongoDB** schema-based **object-modeling** for **Node.js**
 
 ---
 
 ## Getting started with Mongoose
 
-1. `$ npm install mongoose`
+1. Install `$ npm install mongoose`
 2. Connect
     ```javascript
-    const mongoose = require('mongoose');
-    mongoose.connect('mongodb://localhost:27017/test');
+    import mongoose from 'mongoose';  // const mongoose = require('mongoose');
+    mongoose.connect('mongodb://localhost:27017/easylib');                                //
     ```
 3. Create document
     ```javascript
-    const Cat = mongoose.model('Cat', { name: String });
-    const kitty = new Cat({ name: 'Zildjian' });
-    kitty.save().then(() => console.log('meow'));
+    const Book = mongoose.model('Book', { name: String });
+    const softwareEngineering = new Book({ name: 'Software Engineering' });
+    softwareEngineering.save().then(() => console.log('saved!'));                                //
     ```
 4. Query
     ```javascript
-    const cats = await Cat.find().exec();
+    const books = await Book.find().exec();                                                    //
     ```
 
-> https://mongoosejs.com/docs/index.html
+> [www.mongodb.com/docs/drivers/node/current/integrations/mongoose-get-started](https://www.mongodb.com/docs/drivers/node/current/integrations/mongoose-get-started/)
 
 ---
 
@@ -155,107 +157,116 @@ run().catch(console.dir);
 
 ```javascript
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+const { Schema, SchemaTypes } = mongoose;
 
 const bookSchema = new Schema({
-  title:  String, // String is shorthand for {type: String}
-  author: String,
-  body:   String,
-  comments: [{ body: String, date: Date }],
-  date: { type: Date, default: Date.now },
+  title:  String,                                       // String
+  author: { type: String, required: true },             // String, required
+  editor: { name: String, address: String },            // Nested path {name, address}
+  comments: [ { body: String, date: Date } ],           // Nested path array
+  date: { type: Date, default: Date.now },              // Date, default value
   hidden: Boolean,
-  meta: { votes: Number, favs:  Number }
+  meta: { votes: Number, favs:  Number }.
 });
 ```
 
-**Ids** - By default, Mongoose adds an _id property to your schemas.
+By default, Mongoose adds the `_id` property to your schemas as:
 ```javascript
-  _id: Schema.Types.ObjectId
+  _id: Schema.Types.ObjectId                                                                //
 ```
 
 ---
 
-### Subdocuments versus Nested Paths
-
-> https://mongoosejs.com/docs/subdocs.html#subdocuments-versus-nested-paths
-
-```javascript
-// Subdocument
-const subdocumentSchema = new mongoose.Schema({
-  child: new mongoose.Schema({ name: String, age: { type: Number, default: 0 } })
-});
-const Subdoc = mongoose.model('Subdoc', subdocumentSchema);
-// subdoc.child may be undefined
-
-// Nested path
-const nestedSchema = new mongoose.Schema({
-  child: { name: String, age: { type: Number, default: 0 } }
-});
-const Nested = mongoose.model('Nested', nestedSchema);
-// nested.child will never be undefined
-```
-
----
-
-## Creating a **model**
+## Creating a **model** and perform **CRUD** operations
 
 > https://mongoosejs.com/docs/api/model.html
 
-To use our schema definition, we need to convert our **bookSchema** into a **Model** we can work with. To do so, we pass it into mongoose.model(modelName, schema):
-
 ```javascript
-const BookModel = mongoose.model('Book', bookSchema);
-// Constructing Documents
-const doc = new BookModel({title:  'The Mongoose Docs'});
-await doc.save();
-// Querying
-const q1 = await BookModel.find({}).where('date').gt(oneYearAgo).exec();
-const q2 = await BookModel.find({ year: { $gt: 2023 } });
-// Deleting
-await Tank.deleteOne({ size: 'large' });
-// Updating
-await Tank.updateOne({ size: 'large' }, { name: 'T-90' });
+const Book = mongoose.model('Book', bookSchema);                     // Using schema, create a Model
+
+const doc = await Book.create({title:  'The Mongoose Docs'});        // Constructing Documents
+// const doc = new Book({title: 'The Mongoose Docs'});               // Or
+// await doc.save();
+
+const q = await Book.find({ year: { $gt: 2023 } }).exec();           // Querying: find, findById, findOne
+// const q = await Book.where('date').gt(oneYearAgo).exec();         // or
+
+await Book.deleteOne({ title: 'The Mongoose Docs' });                // Deleting: deleteOne, deleteMany
+
+await Book.updateOne({ title: 'Mongoose' }, { author: 'Marco' });    // Updating
 ```
 
 ---
 
-## Querying and Saving **Documents**
+## Querying Documents
 
 > https://mongoosejs.com/docs/models.html#querying
 > https://mongoosejs.com/docs/documents.html#updating-using-save
 
-Mongoose supports the **rich query syntax of MongoDB** (List of MongoDB Query and Projection Operators https://www.mongodb.com/docs/manual/reference/operator/query). Documents can be retrieved using a model's **find**, **findById**, or **findOne** static methods. 
+Mongoose supports the **rich query syntax of MongoDB** (List of MongoDB Query and Projection Operators https://www.mongodb.com/docs/manual/reference/operator/query).
+
+Documents can be retrieved using a model's **find**, **findById**, or **findOne** static methods. 
 
 ```javascript
-BookModel.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
-const books = await BookModel.find({ year: { $gt: 2023 } });
-const doc = await MyModel.findOne();
-book.title = 'foo';
-await book.save();
+await BookModel.find();
+await BookModel.find({ year: { $gt: 2023 } }).exec();                         // find.exec
+await BookModel.find({ size: 'small' }).where('createdDate').gt(oneYearAgo);  // find.where
+
+await Blog.findOne({ author: "Marco" });                                      // findOne.exec
+await Blog.findOne().where("author").equals("Marco");                         // findOne.where
 ```
+
+> Promises? https://mongoosejs.com/docs/queries.html#queries-are-not-promises
 
 ---
 
-##   Populate
+```javascript
+const BookSchema = new mongoose.Schema({
+  author: {name: String}                                      // Nested path
+});                                                           // book.author is a MongooseDocument {undefined}
+```
+
+## Introducing multiple schemas [🔗](https://www.mongodb.com/docs/drivers/node/current/integrations/mongoose-get-started/#introduce-multiple-schemas)
+
+```javascript
+const { Schema, SchemaTypes } = mongoose;
+...
+const BookSchema = new mongoose.Schema({
+  author: { type: SchemaTypes.ObjectId, ref: 'User', required: true },  // Ref ObjectId
+});                                                                                                                  
+...
+await Book.create({ author: author._id });
+await Book.findOne({ title: 'Casino Royale' }).populate('author');
+```
+
+> ```javascript
+> // https://mongoosejs.com/docs/subdocs.html#subdocuments-versus-nested-paths
+> const BookSchema = new mongoose.Schema({
+>   author: new mongoose.Schema({ name: String })       // Subdocument; Each subdocument has an _id by default
+> });                                                   // book.author may be undefined               
+> ```
+
+---
+
+###  Populate
 
 > https://mongoosejs.com/docs/populate.html
 
 ```javascript
-const personSchema = Schema({
-  _id: Schema.Types.ObjectId,
+const authorSchema = Schema({
   name: String,
-  stories: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+  books: [{ type: Schema.Types.ObjectId, ref: 'Book' }]   // One author -> Many books
 });
-const storySchema = Schema({
-  author: { type: Schema.Types.ObjectId, ref: 'Person' },
-  title: String,
-  fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
-});
-const Story = mongoose.model('Story', storySchema);
-const Person = mongoose.model('Person', personSchema);
+const Author = mongoose.model('Author', authorSchema);
 
-Story.findOne({ title: 'Casino Royale' })
-.populate('author').exec(function (err, story) { ... });
+const bookSchema = Schema({
+  author: { type: Schema.Types.ObjectId, ref: 'Author' }, // One book -> Many authors
+  title: String,
+});
+const Book = mongoose.model('Book', bookSchema);
+
+await Book.findOne({ title: 'Casino Royale' })
+.populate('author');                                      // find.populate
 ```
 
 ---
@@ -265,20 +276,17 @@ Story.findOne({ title: 'Casino Royale' })
 We don't want our password in the source code. Let's use env variable e.g. `DB_URL`.
 
 ```javascript
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';  // const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URL);
 ```
 
 How can we set the `DB_URL` env variable when we run the script?
 
 1. `$ npm install dotenv`
-2. ```javascript
-   // .env file
-   DB_URL=mongodb://localhost:27017/mydatabase
-   ```
+2. Create a .env file `DB_URL=mongodb://localhost:27017/mydatabase`
 3. ```javascript
-   require('dotenv').config()
-   const mongoose = require('mongoose');
+   import 'dotenv/config'            // require('dotenv').config()
+   import mongoose from 'mongoose';  // const mongoose = require('mongoose');
    mongoose.connect(process.env.DB_URL);
    ```
 4. `node -r dotenv/config your_script.js`
@@ -292,7 +300,7 @@ How can we set the `DB_URL` env variable when we run the script?
 
 Dotenv **module** loads environment variables from a `.env` file into `process.env.`:
 ```javascript
-require('dotenv').config()
+import 'dotenv/config'            // require('dotenv').config()
 console.log(process.env.DB_URL)
 ```
 
@@ -386,21 +394,9 @@ app.locals.db = mongoose.connect(process.env.DB_URL,
 - Starting from your APIs resources, define collections and their schema.
 
 - You may incorporate some resources into others as subdocuments. For example, booklendings could be nested under book.
-
-```javascript
-// https://mongoosejs.com/docs/subdocs.html#adding-subdocs-to-arrays
-const Parent = mongoose.model('Parent');
-const parent = new Parent();
-parent.children.push({ name: 'Liesl' });
-
-// https://mongoosejs.com/docs/subdocs.html#subdoc-parents
-const schema = new Schema({
-  docArr: [{ name: String }],
-  singleNested: new Schema({ name: String })
-});
-````
-
-- Apply populate() when necessary.
+  > https://mongoosejs.com/docs/subdocs.html#adding-subdocs-to-arrays
+  > https://mongoosejs.com/docs/subdocs.html#subdoc-parents
+- Querying with populate() when necessary.
 
 ---
 
