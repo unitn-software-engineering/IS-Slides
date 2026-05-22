@@ -24,11 +24,11 @@ Software Engineering - Lab
 
 ---
 
-# Questions and answers
+<!-- # Questions and answers
 
 ![h:450](../vevox.png)
 
----
+--- -->
 
 ## Where are we headed? ... a web service backend
 

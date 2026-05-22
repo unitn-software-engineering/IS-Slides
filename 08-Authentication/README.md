@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Authentication'
-footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
 ---
 
 # **Authentication**
@@ -14,8 +14,6 @@ footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineeri
 Software Engineering - Lab
 
 #### Marco Robol - marco.robol@unitn.it
-
-*Academic year 2024/2025*
 
 ---
 
@@ -95,7 +93,7 @@ Play with JSON Web Tokens at [jwt.io](https://jwt.io/)
 
 ---
 
-![w:600](TokenBasedAuthentication.png)
+![w:500](TokenBasedAuthentication.png)
 
 > https://www.permit.io/blog/what-is-token-based-authentication
 
@@ -160,18 +158,18 @@ Locally, we need to set our `SUPER_SECRET` system variable before running our ap
 **Dotenv** (`$ npm install dotenv`) loads values from `.env` file and made them available within the application as environment variables in `process.env.*`
 
 ```javascript
-SUPER_SECRET="islab" // .env file to be ignored by git; see `.gitignore`
+SUPER_SECRET="islab" // .env file to be ignored by git; see `.gitignore`               
 ```
 
 - **Loading** `dotenv` within the source code.
   ```javascript
-  require('dotenv').config()
+  import 'dotenv/config'            // require('dotenv').config().               
   ```
 
 - **Preloading** `dotenv` when invoking Node.js with --require (-r) option. By doing this, you do not need to load dotenv in your application code. `$ node -r dotenv/config your_script.js` or `$ npm run dev` using a script defined in `package.json`:
   ```json
     "scripts": {
-      "dev": "node -r dotenv/config index.js", ...
+      "dev": "node -r dotenv/config index.js",                         ...
   ```
 
 ---

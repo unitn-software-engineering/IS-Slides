@@ -30,11 +30,11 @@ Tools and services:
 - [MongoDB for VS Code](https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode)
   - or alternatively MongoDB [Compass GUI](https://www.mongodb.com/products/compass)
 
----
+<!-- ---
 
 # Questions and answers
 
-![h:450](../vevox.png)
+![h:450](../vevox.png) -->
 
 ---
 

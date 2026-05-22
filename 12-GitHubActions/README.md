@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Continuous Integration - Continuous Deployment'
-footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
 ---
 
 # **Continuous Integration & Deployment**
@@ -21,13 +21,11 @@ Software Engineering - Lab
 
 In today's class, we will see how to set-up a continuous integration environment with Github Actions, and how to deploy our application on Render.com.
 
-> **EasyLib repos**
-> BackEnd - https://github.com/unitn-software-engineering/EasyLib
-> Vue FrontEnd - https://github.com/unitn-software-engineering/EasyLibVue
+> **EasyLib** https://github.com/unitn-software-engineering/EasyLib
+> [**easy-lib**.onrender.com](https://**easy-lib**.onrender.com)
 
-> **EasyLib deploys**
-> Basic Frontend - https://easy-lib.onrender.com/
-> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp/ or https://unitn-software-engineering.github.io/EasyLibApp/
+> EasyLib **Vue** FrontEnd: https://github.com/unitn-software-engineering/EasyLibVue
+> [**easylibvue**.onrender.com](https://easylibvue.onrender.com)
 
 ---
 
@@ -49,8 +47,8 @@ In today's class, we will see how to set-up a continuous integration environment
 
 ## Node.js CI Workflow
 
-`EasyLib/.github/workflows/node.js.yml`
 ```yaml
+                                                            # EasyLib/.github/workflows/node.js.yml
 name: Node.js CI
 on:
   push:
@@ -77,8 +75,8 @@ jobs:
 
 ## Environment variables
 
-`EasyLib/.github/workflows/node.js.yml`
 ```yaml
+                                                  # EasyLib/.github/workflows/node.js.yml
 name: Node.js CI
 
     # This is used to load Environment-level secrets, from the specified environment.
@@ -93,11 +91,42 @@ name: Node.js CI
 
 ---
 
-## Deploy on Render.com
+## Deploy on Render.com `sws2apps/render-deployment`
 
-`EasyLib/.github/workflows/node.js.yml`
 ```yaml
+                                                          # EasyLib/.github/workflows/node.js.yml
 ...
+
+jobs:
+  test:
+    ...  
+  deploy:
+    name: Wait for Deploy
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Trigger deployment
+        uses: sws2apps/render-deployment@main
+        with:
+          serviceId: ${{ secrets.RENDER_ID }}         # Dashboard > Service ID > srv-...
+          apiKey: ${{ secrets.RENDER_API_KEY }}       # Account settings > CLI Tokens
+          multipleDeployment: false                   # Optional, default true
+```
+
+---
+
+# Questions?
+
+marco.robol@unitn.it
+
+---
+
+## Deploy on Render.com with `bounceapp/render-action`
+
+```yaml
+                                                          # EasyLib/.github/workflows/node.js.yml
+...
+
 jobs:
   test:
     ...  
@@ -112,18 +141,11 @@ jobs:
         with:
           render-token: ${{ secrets.RENDER_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          service-id: ${{ secrets.RENDER_ID }}
-          # srv-xxxxxxxxxxxxxxxxxxxx
+          service-id: ${{ secrets.RENDER_ID }}        # srv-xxxxxxxxxxxxxxxxxxxx
           retries: 20
           wait: 16000
           sleep: 30000
 ```
-
----
-
-# Questions?
-
-marco.robol@unitn.it
 
 ---
 

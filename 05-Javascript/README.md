@@ -29,11 +29,11 @@ Software Engineering
 
 In the next lab... how to implement a web service with Node.js [Express](https://expressjs.com/it/) web framework
 
----
+<!-- ---
 
 # Questions and answers
 
-![h:450](../vevox.png)
+![h:450](../vevox.png) -->
 
 ---
 
@@ -474,6 +474,20 @@ class Suv extends Car3 {
 var NissanQuashqai = new Suv('Nissan', 'Quashqai', 'black');
 console.log(NissanQuashqai);
 console.log(NissanQuashqai.description());
+```
+
+---
+
+# Handling errors
+
+```javascript
+const o = {};
+try {
+    console.log( o.a[0] );
+} catch (err) {
+    console.error('Catching an error:', err);
+}
+console.log( data );
 ```
 
 ---
@@ -970,6 +984,43 @@ readPromisify('/file.md')
 
 ---
 
+# Handling errors within Promises
+
+```javascript
+function sleep (ms) {
+    return new Promise( (res, rej) => {
+        if (typeof(ms) == "string")
+            throw ("string not accepted");
+        setTimeout( () => {
+            if (typeof(ms) == "string")
+                rej ("string not accepted");
+            else
+                res(ms+"ms")
+        }, ms);
+    } );
+}
+try {
+    sleep(1000)
+    .then( v => {
+        console.log(v);
+        const p0 = sleep("hi");
+        console.log(p0);
+        const p1 = p0.catch ( e => console.log("final.promise.catch", e) );
+        console.log(p1);
+        return p1; //p1
+    })
+    .then( v => console.log(v) )
+} catch (error) {
+    console.error("maintrycatch", error);
+}
+console.error("program ended");
+
+
+
+```
+
+---
+
 ## Asynch/await
 
 https://javascript.info/async-await
@@ -1016,6 +1067,42 @@ async function asyncExample() {
     await promisifiedTimeout(5000);              // then wait for additional 5
     console.log('done');                         // done
 }
+```
+
+---
+
+# Handling errors within async functions
+
+```javascript
+/** @return {Promise<string>} */
+function sleep (ms) {
+    return new Promise( (res, rej) => {
+        setTimeout( () => {
+            if (typeof(ms) == "string")
+                rej("string not accepted");
+            else
+                res(ms+"ms");
+            console.log("timer");
+        }, ms);
+    } );
+}
+
+async function main () {
+    console.log("start");
+    var v;
+    // try {
+        v = await sleep("1000");
+    // } catch (error) {
+        // v = error;
+    // }
+    console.log(v);
+    console.log("end");
+    return("bye");
+}
+main().finally( console.log ).catch( e => console.log(e) );
+
+
+
 ```
 
 ---

@@ -10,7 +10,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Git - Versioning and Collaboration'
-footer: 'Software Engineering - 2024/2025, Trento - Marco Robol'
+footer: 'Software Engineering - 2025/2026, Trento - Marco Robol'
 ---
 <!-- _class: home -->
 

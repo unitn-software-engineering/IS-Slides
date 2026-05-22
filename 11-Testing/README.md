@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Testing'
-footer: 'Marco Robol - University of Trento, A.Y. 2024/2025 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
 ---
 
 # **Testing**
@@ -23,26 +23,29 @@ Software Engineering - Lab
 
 ---
 
-## Install Jest in **develompment** environment and run it
+## Install Jest `npm install --save-dev jest`
 
-1. `npm install --save-dev jest`
-
-2. Create a `sum.test.js`
+- Create `sum.js` that exports a `sum()` function; then in `sum.test.js`:
 
     ```javascript
-    test('adds 1 + 2 to equal 3', () => {
+    test('adds 1 + 2 to equal 3', () => {                                                
       expect(sum(1, 2)).toBe(3);
     });
     ```
     > https://jestjs.io/docs/en/getting-started.html
 
-3. In another file create and export the function `sum()`
+- To run `jest`, create an npm script `test` in `package.json:`
+    ```json
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",                                
+    ````
+    > To use Jest with ESModules, use `NODE_OPTIONS=--experimental-vm-modules`
+    > https://jestjs.io/docs/ecmascript-modules
 
-4. Run `jest`
+- Run with `npm run test`
 
 ---
 
-## Another example: testing *concatenateStrings(a, b)*
+## Matchers [jestjs.io/docs/using-matchers](https://jestjs.io/docs/using-matchers)
 
 `./someModule.js`
 ```javascript
@@ -66,9 +69,24 @@ test('concat(null,null)', () => {
 
 ---
 
-## Testing an API with `node-fetch`
+## Asynchronous Code Testing [jestjs.io/docs/asynchronous](https://jestjs.io/docs/asynchronous)
 
 > When you have code that runs **asynchronously**, Jest needs to know when the code it is testing has completed, before it can move on - https://jestjs.io/docs/asynchronous
+
+`npm install --save-dev node-fetch` https://www.npmjs.com/package/node-fetch 
+
+```javascript
+const fetch = require("node-fetch");
+const url = process.env.API_URL || "https://easy-lib.onrender.com/api/v1"
+it('works with get', async () => {
+    expect.assertions(1)
+    expect( ( await fetch(url+"/books") ).status ).toEqual(200)
+})
+```
+
+---
+
+## Testing an API with `node-fetch`
 
 `npm install --save-dev node-fetch` https://www.npmjs.com/package/node-fetch 
 
@@ -79,7 +97,7 @@ const url = process.env.API_URL || "https://easy-lib.onrender.com/api/v1"
 it('works with get', async () => {
     expect.assertions(1)
     expect( ( await fetch(url+"/books") ).status ).toEqual(200)
-})                                         // TODO: try up to here with the GET!
+})
 it('works with post', async () => {
     expect.assertions(1)
     var response = await fetch(url+'/books', {
@@ -116,40 +134,26 @@ test('GET / should return 200', () => {
 
 ---
 
-# Configuring Jest environment variables
+## Configuring Jest
 
-> https://lusbuab.medium.com/using-dotenv-with-jest-7e735b34e55f
-
-1. Add `test` *script* to `package.json`:
+Simple preloading *dotenv*: in `test` *script* within `package.json` and run with `npm test`
 
 ```json
-"scripts": {
-    "start": "node api.js",                        // dotenv not preloaded
-    "dev": "node -r dotenv/config index.js",       // dotenv preloaded
-    "test": "jest --setupFiles dotenv/config"      // dotenv preloaded
+                                                                      // package.json
+"dev": "node -r dotenv/config index.js",      // dotenv preloaded
+"test": "jest --setupFiles dotenv/config"     // dotenv preloaded
 ```
 
-2. Run jest `npm test`
-
-Alternatively...
-
----
-
-## Configure jest to load *environment variables* from `.env` without preloading *dotenv module* 
-
-1. In `package.json` do not preload dotenv `"test": "jest"`
-
-1. From https://jestjs.io/docs/en/configuration.html, create `jest.config.js` and set:
-
+Or, configuration file `jest.config.js` https://jestjs.io/docs/en/configuration.html
 ```javascript
+                                                                        // jest.config.js
 module.exports = {
   setupFiles: ["<rootDir>/.jest/setEnvVars.js"],
   verbose: true
 ```
 
-2. Create file `./.jest/setEnvVars.js` to load dotenv:
-
 ```javascript
+                                                                        // .jest/setEnvVars.js
 require("dotenv").config()
 ```
 
@@ -210,6 +214,24 @@ describe('GET /api/v1/books', () => {
 
 ---
 
+# EasyLib Links
+
+> **EasyLib repos**
+> BackEnd - https://github.com/unitn-software-engineering/EasyLib
+> Vue FrontEnd - https://github.com/unitn-software-engineering/EasyLibVue
+
+> **EasyLib deploys**
+> Basic Frontend - https://easy-lib.onrender.com/
+> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp/ or https://unitn-software-engineering.github.io/EasyLibApp/
+
+---
+
+# Questions?
+
+marco.robol@unitn.it
+
+---
+
 # Coverage
 
 Configure Jest to activate **coverage** - [jestjs.io/docs/configuration](https://jestjs.io/docs/configuration#collectcoverage-boolean):
@@ -230,22 +252,3 @@ or
   "verbose": true
 }
 ```
-
----
-
-# Questions?
-
-marco.robol@unitn.it
-
----
-
-# Links
-
-> **EasyLib repos**
-> BackEnd - https://github.com/unitn-software-engineering/EasyLib
-> Vue FrontEnd - https://github.com/unitn-software-engineering/EasyLibVue
-
-> **EasyLib deploys**
-> Basic Frontend - https://easy-lib.onrender.com/
-> Vue Frontend - https://easy-lib.onrender.com/EasyLibApp/ or https://unitn-software-engineering.github.io/EasyLibApp/
-
