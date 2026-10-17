@@ -10,7 +10,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'Git - Versioning and Collaboration'
-footer: 'Software Engineering - 2025/2026, Trento - Marco Robol'
+footer: 'Software Engineering - 2026/2027, Trento - Marco Robol'
 ---
 <!-- _class: home -->
 
@@ -36,12 +36,6 @@ Software Engineering - Lab
 - Visual Studio Code (https://code.visualstudio.com/)
 - GitHub (https://github.com)
 - Git Tutorial (https://www.atlassian.com/git/tutorials)
-
----
-
-# Questions and answers
-
-![h:450](../vevox.png)
 
 ---
 
