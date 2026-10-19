@@ -24,15 +24,15 @@ paginate: true
 backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
-header: 'AI-Native SDLC - Specification Driven Development'
+header: 'Specification Driven Development'
 footer: 'Software Engineering - 2026/2027, Trento - Marco Robol'
 ---
 
-# **AI-Native SDLC**
+# **Dalla User Story al codice**
 
-Dai requisiti all'implementazione, con e senza agenti
+Da **S**pecification **D**riven **D**evelopment a AI-Native **S**oftware **D**evelopment **L**ife **C**ycle
 
-Software Engineering - Lab
+*Software Engineering - Lab*
 
 #### Marco Robol - marco.robol@unitn.it
 
@@ -40,18 +40,31 @@ Software Engineering - Lab
 
 # 🗺️ Contenuti
 
-- **Da dove partiamo** – RF, Use Case e User Story di EasyLib (lezioni 6–8)
-- **Lezione 1** – Dalla User Story al codice (tutto a mano)
-- **Lezione 2** – Ciclo strutturato con OpenCode (tu validi, l'agente scrive)
-- **Anticipazione** – Workshop sull'automazione con agenti
+- **Da dove partiamo** – RF, Use Case e User Story di EasyLib (lezioni precedenti 6–8)
+- **✍️ Tu scrivi** – Dalla User Story al codice (tutto a mano)
+- **🤖 Tu validi** – Ciclo strutturato con OpenCode (tu validi, l'agente scrive)
+- **🚀 Tu decidi** – Workshop sull'automazione con agenti
 
-### Progetto di riferimento: **EasyLib**
+> Progetto di riferimento: **EasyLib**
 
-Lo stesso EasyLib delle lezioni su Use Case e User Story.
-Lavoriamo su **US-03 – Registrare una restituzione**, due volte:
+---
 
-- Lezione 1 → a mano
-- Lezione 2 → con OpenCode: stessa User Story, processo diverso
+<!-- _class: small -->
+
+# 👀 Il percorso in un colpo d'occhio
+
+Lo stesso ciclo, tre volte: cambia **chi scrive** e **dove vive il contesto**.
+
+| | ✍️ Parte 1 | 🤖 Parte 2 | 🚀 Extra (Workshop) |
+|---|---|---|---|
+| **Ruolo** | *Tu scrivi* | *Tu validi* | *Tu decidi* |
+| **Metodo** | A mano, con il supporto di OpenCode | Spec-driven con OpenCode | AI-native |
+| **Chi scrive** | Il team; nel repo solo test e codice | OpenCode, in dialogo | Agenti specialistici |
+| **OpenCode** | Solo genera codice, prompt unico | Produce intent, spec, plan | Orchestrazione completa |
+| **Contesto** | Nel team | Nel repo | Orchestrato |
+| **Gate** | Review della PR | Approvi ogni artefatto | Gate umani espliciti |
+
+**Gate**: punto di controllo tra due passi; si prosegue solo dopo un'approvazione esplicita o un controllo superato.
 
 ---
 
@@ -77,8 +90,8 @@ Non si sostituiscono: **si sommano**. Ogni approccio aggiunge un livello sopra i
 
 | Approccio | Nel percorso |
 |---|---|
-| **TDD** | Lezione 1, passo 7: i test di accettazione si scrivono **prima** e devono fallire |
-| **BDD** | Lezione 1, passo 7: ogni AC diventa uno scenario **Given-When-Then** |
+| **TDD** | Lezione 1, passo 9: i test di accettazione si scrivono **prima** e devono fallire |
+| **BDD** | Lezione 1, passo 9: ogni AC diventa uno scenario **Given-When-Then** |
 | **Spec-Driven** | Lezione 2: `intent.md` → `spec.md` → `oas3.yaml` → `plan.md`, approvati prima del codice |
 | **AI-Native** | Lezione 2 e Workshop: OpenCode produce gli artefatti, tu validi; agenti specialistici, CI e review automatiche |
 
@@ -88,19 +101,7 @@ Perché la specifica torna centrale con gli agenti?
 
 ---
 
-# 👀 Il percorso in un colpo d'occhio
-
-Gli **stessi passi** in tutte e tre le fasi: cambia chi li esegue.
-
-| | Chi scrive gli artefatti | Ruolo di OpenCode | Gate |
-|---|---|---|---|
-| ✍️ **Lezione1** | Il team; nel repo solo test e codice | Solo generatore di codice, prompt unico | Review della PR |
-| 🤖 **Lezione2** | OpenCode, in dialogo | Produce intent, spec, plan | Tu approvi ogni artefatto |
-| 🚀 **Workshop** | Agenti specialistici | Orchestrazione completa | Gate umani espliciti |
-
-**Gate**: punto di controllo tra due passi; si prosegue solo dopo un'approvazione esplicita o un controllo superato.
-
----
+<!-- _class: small -->
 
 # 🔄 Il ciclo
 
@@ -108,13 +109,13 @@ Gli **stessi passi** in tutte e tre le fasi: cambia chi li esegue.
  D1                 RF ──► Use Case ──► User Story ──► Backlog
                     ┌─────────────────────────────────────┘
                     ▼
- Sprint             Refinement ──► Criteri (AC) ──► Task e stima
-                    ┌─────────────────────────────────────┘
+ Sprint             Refinement ──► Criteri (AC) ──► Task e stima ──► Issue + branch
+                    ┌──────────────────────────────────────────────────┘
                     ▼
-                    Test (rossi) ──► Implementazione ──► Verifica
-                    ┌─────────────────────────────────────┘
+                    Test (rossi) ──► Implementazione ──► Verifica ──► Pull Request
+                    ┌──────────────────────────────────────────────────┘
                     ▼
-                    Review ──► Merge ──► Retrospective
+                    Review ──► Merge ──► Demo ──► Retrospective
 ```
 
 - Ogni freccia è una **decisione** presa in un ordine preciso
@@ -162,7 +163,7 @@ UC-05 Registrare una restituzione ──«include»──► Verificare dati pre
 | US-02 | Registrazione del prestito | UC-04 | RF4 | 5 |
 | US-03 | **Registrazione della restituzione** | UC-05 | RF4 | 3 |
 
-US-01 e US-02 sono quelle della lezione sulle User Story (8 SP = uno sprint). **US-03** prosegue la stessa epic nello sprint successivo.
+US-01 e US-02 sono quelle della lezione sulle User Story (8 SP = uno sprint). US-03 prosegue la stessa epic nello sprint successivo.
 
 ---
 
@@ -218,7 +219,7 @@ Ogni RF è un'**epic**. I legami reali sono molti-a-molti: si tengono con gli **
 
 <!-- _class: section -->
 
-# ✍️ Lezione 1
+# ✍️ Lezione 1: Tu scrivi
 
 ## Dalla User Story al codice
 
@@ -231,7 +232,7 @@ Tutti i passi a mano: decisioni nel team, test e codice nel repo
 Percorrere **una volta** l'intero ciclo, dalla User Story al codice, toccando con mano ogni decisione e l'ordine in cui va presa.
 
 - **Nessun passo viene delegato**
-- OpenCode è ammesso **solo come generatore di codice**:
+- OpenCode è ammesso ma **solo come generatore di codice**:
 prompt diretto, senza generazione di artefatti/documenti intermedi di contesto
 
 ---
@@ -399,15 +400,36 @@ Le cartelle e i file **derivano da RF e UC**: un placeholder per ogni concetto c
 
 > *Come operatore della biblioteca, voglio registrare la restituzione di un libro, in modo da rendere il libro di nuovo disponibile e conservare lo storico del prestito*
 
+```
+ D1                 RF ──► Use Case ──► User Story ──► Backlog
+                    ┌─────────────────────────────────────┘
+                    ▼
+ Sprint             Refinement ──► Criteri (AC) ──► Task e stima ──► Issue + branch
+                    ┌──────────────────────────────────────────────────┘
+                    ▼
+                    Test (rossi) ──► Implementazione ──► Verifica ──► Pull Request
+                    ┌──────────────────────────────────────────────────┘
+                    ▼
+                    Review ──► Merge ──► Demo ──► Retrospective
+```
+
+---
+
+<!-- _class: small -->
+
+# 🔁 Ciclo per US-03
+
 | # | Passo | Dove | Commit |
 |---|---|---|---|
-| 4 | Refinement della US | Nel team, con il Product Owner | – |
-| 5 | Criteri di accettazione | Nel team: AC-US03-xx | – |
-| 6 | Task e stima | Nel team: task in ore, conferma degli SP | – |
-| 7 | Test per primi | Repo: un test per AC, **devono fallire** | `test: US-03 acceptance tests` |
-| 8 | Implementazione | Repo, task per task | per task / gruppo logico |
-| 9 | Verifica | Repo: ogni AC ↔ un test verde | correzioni |
-| 10 | Retrospective | Nel team | – |
+| 4 | Refinement | Team + Product Owner | – |
+| 5 | Criteri (AC) | Team: AC-US03-xx, How to Demo | – |
+| 6 | Task e stima | Team: task in ore, SP | – |
+| 7–8 | Issue e branch | GitHub: #3, `feature/us-03` | – |
+| 9 | Test per primi | Branch: rossi | `test: US-03 …` |
+| 10 | Implementazione | Branch, task per task | per task |
+| 11 | Verifica | Branch: AC ↔ test verde | correzioni |
+| 12–14 | PR, review, merge | GitHub | correzioni |
+| 15–16 | Demo, retrospective | PO, team | – |
 
 Le **decisioni** restano nel team; nel repo entrano solo **test e codice**.
 
@@ -420,8 +442,13 @@ Le **decisioni** restano nel team; nel repo entrano solo **test e codice**.
 Il team, con il **Product Owner**, chiarisce la US prima di implementarla:
 
 - **Domande aperte**: chi può registrare la restituzione? Le penalità (UC-05 «extend») sono in scope?
-- **INVEST**: la US è abbastanza *Small*? Va scomposta?
-- **Valore**: perché serve? → la parte *in modo da* della US
+- **INVEST**, una domanda per lettera:
+  - **I**ndependent: dipende da altre US? → serve un prestito registrato (US-02, già fatta)
+  - **N**egotiable: cosa si può negoziare? → le penalità restano fuori scope
+  - **V**aluable: perché serve? → la parte *in modo da* della US
+  - **E**stimable: il team riesce a stimarla? → 3 SP
+  - **S**mall: sta in uno sprint o va scomposta?
+  - **T**estable: ogni comportamento ha un criterio verificabile? → AC-US03-xx
 
 **Dove?** Chat, lavagna, un foglio condiviso: il mezzo è libero. Il ciclo si gestisce **all'interno del team**.
 
@@ -445,6 +472,8 @@ Dichiarativi, a livello **utente**, con un identificatore ciascuno:
 
 Le **penalità** per ritardo (UC-05 «extend») sono fuori scope: diventeranno una nuova US.
 
+**How to Demo** (lez. 7): *Dato* che sono un operatore autenticato e un prestito è attivo, *quando* registro la restituzione, *allora* il prestito risulta concluso e il libro torna disponibile.
+
 > Un criterio **non è un test**: dice *cosa* deve essere vero, il test dice *come* verificarlo.
 
 ---
@@ -460,9 +489,38 @@ Il team scompone la US in task, stimati in **ore**:
 
 e conferma la stima della US (**3 SP**) rispetto alla capacità dello sprint.
 
-### 🧪 7.Test
+Decisioni, AC e stima sono pronti: è il momento di **scriverli in un posto condiviso**.
 
-Un test per ogni AC, **prima del codice**. È il primo passo che entra nel repo.
+---
+
+<!-- _class: small -->
+
+# 🤝 Collaborazione su GitHub
+
+Solo GitHub e review tra compagni, **nessuna automazione**. Issue e branch si aprono **prima** di test e codice.
+La **Issue** diventa il primo posto **condiviso e collegato al codice** dove scrivere ciò che il team ha deciso.
+
+```
+Issue #3 ──► feature/us-03 ──► Pull Request ──► Review ──► Merge
+ US-03 + AC                      Closes #3                  Issue chiusa
+```
+
+| # | Passo | Dettagli |
+|---|---|---|
+| 7 | Issue | Testo della US, riferimenti (RF4, UC-05), AC-US03-xx, stima |
+| 8 | Branch | `feature/us-03` da `main`, si lavora solo lì |
+| 9–11 | *Test, implementazione, verifica* | *Sul branch (slide seguenti)* |
+| 12 | Pull request | Descrizione a mano: cosa cambia, AC ↔ test, `Closes #3` |
+| 13 | Review | Un compagno legge il diff contro gli AC della Issue, almeno un commento |
+| 14 | Correzioni e merge | Merge solo dopo l'approvazione |
+
+---
+
+<!-- _class: small -->
+
+### 🧪 9. Test per primi
+
+Sul branch `feature/us-03`, un test per ogni AC, **prima del codice**. È il primo passo che entra nel repo.
 - I test **devono fallire** (rosso): il comportamento non esiste ancora
 - Il nome del test cita l'AC: `AC-US03-03 il libro torna disponibile`
 
@@ -470,9 +528,9 @@ Un test per ogni AC, **prima del codice**. È il primo passo che entra nel repo.
 
 <!-- _class: small -->
 
-### 🧪 7. Dal criterio al test (Given-When-Then)
+### 🧪 9. Dal criterio al test (Given-When-Then)
 
-Il test traduce l'AC in uno scenario **eseguibile**, a livello HTTP:
+**Given-When-Then** (sintassi *Gherkin*, nata con il BDD): *Given* lo stato iniziale, *When* l'azione, *Then* il risultato atteso. L'avete visto come "How to Demo" nel backlog (lez. 7); qui diventa un **test case** eseguibile, a livello HTTP, come anticipato nella lez. 8:
 
 ```gherkin
 # AC-US03-01, AC-US03-02, AC-US03-03
@@ -496,7 +554,9 @@ Il prestito **non viene eliminato**: RF4 chiede di mantenere lo storico.
 
 ---
 
-### 💻 8. Implementazione
+<!-- _class: small -->
+
+### 💻 10. Implementazione
 
 Un task alla volta. Se usi OpenCode, **un solo prompt**:
 
@@ -504,50 +564,47 @@ Un task alla volta. Se usi OpenCode, **un solo prompt**:
 
 poi **leggi ogni file generato** e correggi ciò che non torna.
 
-### 🔎 9. Verifica
+### 🔎 11. Verifica
 Esegui i test; per ogni AC controlla che ci sia almeno un test verde.
 
-### 🔙 10. Retrospective del team
-
-| Cose fatte bene | Cose da migliorare | Miglioramenti |
-|---|---|---|
-| … | … | … |
-
 ---
+
 
 <!-- _class: small -->
 
-# 🤝 Collaborazione su GitHub
-
-Solo GitHub e review tra compagni, **nessuna automazione**.
-La **Issue** diventa il primo posto **condiviso e collegato al codice** dove scrivere ciò che il team ha deciso.
-
-```
-Issue #3 ──► feature/us-03 ──► Pull Request ──► Review ──► Merge
- US-03 + AC                      Closes #3                  Issue chiusa
-```
-
-| # | Passo | Dettagli |
-|---|---|---|
-| 11 | Issue | Testo della US, riferimenti (RF4, UC-05), AC-US03-xx, stima |
-| 12 | Branch | `feature/us-03` da `main`, si lavora solo lì |
-| 13 | Pull request | Descrizione a mano: cosa cambia, AC ↔ test, `Closes #3` |
-| 14 | Review | Un compagno legge il diff contro gli AC della Issue, almeno un commento |
-| 15 | Correzioni e merge | Merge solo dopo l'approvazione; la retrospective va come commento finale |
-
----
-
-<!-- _class: small -->
-
-# 💬 Esempio di commento in review
+# 💬 13. Esempio di commento in review
 
 > **`app/booklendings.js`**: il middleware `tokenChecker` non è applicato alla route `PATCH`. **AC-US03-05** dice che solo un operatore autenticato può registrare una restituzione: senza token la risposta deve essere **401**.
 
-1. Lo viluppatore corregge
+1. Lo sviluppatore corregge
 2. Aggiorna la PR
 3. Fa merge **solo dopo l'approvazione**
 
 La review è efficace perché c'è un **riferimento scritto e identificato** (gli AC nella Issue) contro cui confrontare il diff.
+
+---
+
+<!-- _class: small -->
+
+### 🎬 15. Demo (Sprint Review)
+
+Il team **mostra** la US funzionante al Product Owner, seguendo lo scenario **How to Demo**:
+
+> *Dato* che sono un operatore autenticato e un prestito è attivo, *quando* registro la restituzione, *allora* il prestito risulta concluso e il libro torna disponibile.
+
+US-03 è solo backend: la demo si fa con **Swagger UI** generato da `oas3.yaml` o con **Postman**.
+
+| | Chi | Cosa dimostra |
+|---|---|---|
+| **Test** | La macchina | Il codice rispetta gli AC |
+| **Review** | Un compagno | Il diff è corretto e leggibile |
+| **Demo** | Il Product Owner | La US porta il **valore** promesso (*in modo da…*) |
+
+### 🔙 16. Retrospective del team
+
+| Cose fatte bene | Cose da migliorare | Miglioramenti |
+|---|---|---|
+| … | … | … |
 
 ---
 
