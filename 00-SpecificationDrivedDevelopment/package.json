@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "marp --no-stdin README.md --pdf -o 00-SpecificationDrivedDevelopment.pdf"
+    "build": "marp --no-stdin --allow-local-files README.md --pdf -o 00-SpecificationDrivedDevelopment.pdf"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^4.5.1"
