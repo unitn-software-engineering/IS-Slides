@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'RESTful WebAPIs'
-footer: 'Marco Robol - Trento, 2025/2026 - Software Engineering'
+footer: 'Marco Robol - Trento, 2026/2027 - Software Engineering'
 ---
 
 # **Intro to Web 2.0 and RESTful WebAPIs**

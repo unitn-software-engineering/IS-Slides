@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: '01 - Introduction to Web2.0, Javascript and Node.js'
-footer: 'Marco Robol - University of Trento, A.Y. 2025/2026 - Software Engineering'
+footer: 'Marco Robol - University of Trento, A.Y. 2026/2027 - Software Engineering'
 ---
 
 # **Introduction to Web2.0, Javascript and Node.js**

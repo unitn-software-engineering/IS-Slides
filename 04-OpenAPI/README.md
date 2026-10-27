@@ -6,7 +6,7 @@ backgroundColor: #fff
 marp: true
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 header: 'OpenAPI'
-footer: 'Marco Robol - Trento, 2025/2026 - Software Engineering'
+footer: 'Marco Robol - Trento, 2026/2027 - Software Engineering'
 ---
 
 # **Designing and Documenting RESTful APIs with OpenAPI Specification Language**
